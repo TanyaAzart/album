@@ -1,0 +1,5 @@
+export const ADD_ALBUM ='ADD_ALBUM'
+export const EDIT_ALBUM ='EDIT_ALBUM'
+export const REMOVE_ALBUM ='REMOVE_ALBUM'
+export const ADD_PICTURE ='ADD_PICTURE'
+export const REMOVE_PICTURE ='ADD_PICTURE'

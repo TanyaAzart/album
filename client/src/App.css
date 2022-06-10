@@ -1,0 +1,20 @@
+.active {
+    font-weight: bold;
+}
+
+ul{
+    display: flex;
+}
+
+li {
+    display:inline-block;
+    margin: auto;
+}
+
+.albums {
+    flex-direction: column;
+}
+
+.previews img {
+    width: 100px
+}
