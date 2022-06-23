@@ -2,10 +2,10 @@ const express = require('express')
 // const path = require('path')
 const cors = require('cors')
 
-// require('./db/mongoose')
+require('./db/mongoose')
 
-// const albumRouter = require('./routers/albumRouter')
-// const userRouter = require('./routers/userRouter')
+const albumRouter = require('./routers/albumRouter')
+const userRouter = require('./routers/userRouter')
 
 const server = express()
 const port = process.env.PORT || 4000
@@ -18,8 +18,8 @@ server.use(cors())
 
 
 server.use(express.json())
-// server.use(contactRouter)
-// server.use(userRouter)
+server.use(albumRouter)
+server.use(userRouter)
 
 // if (process.env.NODE_ENV ==='production') {
 //     server.use(express.static('client/build'))

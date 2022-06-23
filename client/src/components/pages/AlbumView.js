@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import AlbumContext from '../context/albumContext'
+import AlbumContext from '../../context/album/albumContext'
 import Pic from './math.png'
 
 const AlbumView = () => {
@@ -9,7 +9,7 @@ const AlbumView = () => {
     
     const { id } = useParams()
     
-    const album = albums.filter(album => album.id === id)[0]
+    const album = albums.filter(item => item._id === id)[0]
 
     return (
         <div>

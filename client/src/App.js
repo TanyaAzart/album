@@ -1,18 +1,25 @@
-import React from 'react'
+import React, { useContext, useEffect} from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import AdminPage from './components/AdminPage'
-import Album from './components/Album'
-import AlbumView from './components/AlbumView' 
-import Home from './components/Home' 
-import Register from './components/Register' 
-import Login from './components/Login' 
-import Navbar from './components/Navbar' 
-import AlbumState from './context/albumState'
+import AdminPage from './components/pages/AdminPage'
+import Album from './components/pages/Album'
+import AlbumView from './components/pages/AlbumView' 
+import Home from './components/pages/Home' 
+import Register from './components/pages/Register' 
+import Login from './components/pages/Login' 
+import Navbar from './components/layouts/Navbar' 
+import AlbumState from './context/album/albumState'
+import UserState from './context/user/userState'
 import './App.css'
+import setAuthToken from './utils/setAuthToken'
+
 
 const App= ()=> {
+  
+  setAuthToken()
+
   return (
     <AlbumState>
+    <UserState>
       <div className="App">
       <Router>
       <Navbar />
@@ -27,6 +34,7 @@ const App= ()=> {
         </Routes>
       </Router>
     </div>
+    </UserState>
     </AlbumState>
     
   );
