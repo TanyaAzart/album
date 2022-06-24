@@ -1,4 +1,4 @@
-import React, { useContext, useEffect} from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import AdminPage from './components/pages/AdminPage'
 import Album from './components/pages/Album'

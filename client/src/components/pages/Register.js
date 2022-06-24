@@ -6,16 +6,16 @@ import UserContext from '../../context/user/userContext'
 const Register = () => {   
    const navigate = useNavigate()
    const userContext = useContext(UserContext)
-   const { addUser, deleteUser, current } = userContext
+   const { user, addUser, deleteUser } = userContext
 
    const onSubmit= async (e)=> {
       e.preventDefault()
-         const body = {
+         const data = {
             name: e.target.name.value,
             email: e.target.email.value,
             password: e.target.password.value
          }         
-         const user = await addUser(body)
+         addUser(data)
          
          if(user.name === 'admin') {
             navigate('/admin')
@@ -24,7 +24,7 @@ const Register = () => {
          }           
    }
    
-   return (current? (<div>
+   return (user ? (<div>
          <h2>Would you like to delete your account?</h2>
          <button onClick={deleteUser}>Delete Account</button>
          </div>) : (<div>

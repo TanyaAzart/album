@@ -7,7 +7,7 @@ const Home = () => {
     const userContext = useContext(UserContext)
     const albumContext = useContext(AlbumContext)
     const { albums, getAlbums } = albumContext   
-    const { loadUser, getUsers } = userContext
+    const { loadUser } = userContext
 
     const navigate = useNavigate()
     
@@ -24,9 +24,9 @@ const Home = () => {
 
     return (<div>
             <h2>You can see the following albums:</h2>
-            {albums.map((album)=>(
+            {albums.map( album =>(
                 <p key={album._id}>
-                <Link to={`/album/${album.id}`} >
+                <Link to={`/album/${album._id}`} >
                 {album.title}, {album.year}
                 </Link>
                 </p>            

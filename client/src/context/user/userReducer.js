@@ -18,24 +18,24 @@ const userReducer = (state, action)=>{
             return {
                 ...state,
                 users: state.users.concat(action.payload),
-                current: action.payload
+                user: action.payload
             }
         case DELETE_USER:
             return {
                 ...state,
                 users: state.users.filter(user => user.email!==action.payload.email),
-                current: null
+                user: null
             }
         case LOGIN_USER:
         case LOAD_USER:
             return {
                 ...state,
-                current: action.payload
+                user: action.payload
             }
         case LOGOUT_USER:
             return {
                 ...state,
-                current: null
+                user: null
             }
         default:
                 return state

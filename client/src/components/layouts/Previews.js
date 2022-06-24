@@ -89,6 +89,9 @@ const Previews = (props) => {
         while(previews.hasChildNodes()){
             previews.removeChild(previews.firstChild)
         }
+        setPics({
+            pics: []
+        })
     }
 
     const onAddTitle = (e, pic) => {        

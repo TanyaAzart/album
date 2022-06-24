@@ -9,11 +9,11 @@ import AlbumContext from '../../context/album/albumContext'
 const Album = () => {
 
     const albumContext = useContext(AlbumContext)
-    const { albums, addAlbum, editAlbum, getAlbums } = albumContext   
+    const { albums, addAlbum, editAlbum } = albumContext   
 
     const { id } = useParams ()
 
-    const navigate = useNavigate()
+    const navigate = useNavigate()    
 
     const [ album, setAlbum ] = useState({
         title: '',
@@ -21,20 +21,20 @@ const Album = () => {
         descr: '',
         pics:[]
     })  
- 
-    useEffect(()=> { 
-        getAlbums() 
-        if(id) {
-            setAlbum(albums.find(item=>item._id === id))            
-        }  
-    },[])   
 
-    useEffect(()=> {        
-       
-    },[album]) 
+    useEffect(()=> {       
+        if(id) {
+            setAlbum(albums.find(album=> album._id === id))       
+        }  
+    },[id, albums]) 
+
+    useEffect(()=> {
+
+    },[album])
+    
 
     const onChange = (e)=> {  
-        setAlbum( {
+        setAlbum({
             ...album,
             [e.target.name]: e.target.value
         })   
@@ -42,12 +42,13 @@ const Album = () => {
     
     const onSubmit =(e)=>{
         e.preventDefault() 
-        console.log(album)
         
         if(id) {
             editAlbum(album)
+           
         } else {
             addAlbum(album)
+           
         }  
         alert("Album saved!") 
         navigate('/admin')
@@ -59,9 +60,9 @@ const Album = () => {
 
         const names = []
         
-        images.forEach(image=> names.push(image.name))
+        images.forEach(image => names.push(image.name))
 
-        for (let i=0; i<pics.length;i++){
+        for (let i=0; i < pics.length; i++){
             if(!names.includes(pics[i].name)){
                 images.push(pics[i])
             }
@@ -77,14 +78,15 @@ const Album = () => {
        
         setAlbum({
             ...album,
-            pics: album.pics.filter(item => item.name !== name)
+            pics: album.pics.filter(pic => pic.name !== name)
         }) 
     }
 
     const onTitleChange = (e, name)=> {  
        
-        const picsToKeep = album.pics.filter(item => item.name !== name)
-        const picToUpdate = album.pics.filter(item => item.name === name)
+        const picsToKeep = album.pics.filter(pic => pic.name !== name)
+        const picToUpdate = album.pics.filter(pic => pic.name === name)
+        
         picToUpdate[0].title = e.target.value
 
         setAlbum( {
@@ -103,8 +105,8 @@ const Album = () => {
     }
 
      
-    return (album? (<div>
-             {id? <EditAlbum 
+    return album? (<div>
+             {id ? <EditAlbum 
                     album={album} 
                     onChange={onChange} 
                     deletePicture={deletePicture}
@@ -116,8 +118,7 @@ const Album = () => {
                             />}
              <Previews addPictures={addPictures}/>  
              <button onClick={onSubmit}>Save</button>
-            </div>) : (<div>Loading...</div>)
-            )        
+            </div>)  : (<div>Loading...</div>)               
         }
 
 export default Album

@@ -4,17 +4,17 @@ import UserContext from '../../context/user/userContext'
 
 const Login = () => {
     const userContext = useContext(UserContext)
-    const { loginUser, logoutUser, current } = userContext
+    const { user, loginUser, logoutUser } = userContext
 
     const navigate = useNavigate()
 
     const onLogin = async (e)=> {
         e.preventDefault()
-        const body = {
+        const data = {
             email: e.target.email.value,
             password: e.target.password.value
         }
-        const user = await loginUser(body) 
+        loginUser(data) 
       
         if(user.name === 'admin') {
             navigate('/admin')
@@ -23,7 +23,7 @@ const Login = () => {
         }          
     }
     
-    return (!current? (<div>
+    return (!user ? (<div>
         <h2>Would you like to login?</h2>
         <form onSubmit={onLogin}>
             <label>E-mail</label>

@@ -2,7 +2,7 @@ import React from 'react'
 import AlbumForm from './AlbumForm'
 
 const EditAlbum = ({ album, onChange, deletePicture, onTitleChange })=> {
-
+    
     return (
         <div>
             <h3>Edit Album</h3>

@@ -2,7 +2,7 @@ export const GET_ALBUMS ='GET_ALBUMS'
 export const ADD_ALBUM ='ADD_ALBUM'
 export const EDIT_ALBUM ='EDIT_ALBUM'
 export const DELETE_ALBUM ='DELETE_ALBUM'
-
+export const GET_ALBUM ='GET_ALBUM'
 
 export const GET_USERS = 'GET_USERS'
 export const LOAD_USER = 'LOAD_USER'

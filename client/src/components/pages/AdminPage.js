@@ -6,19 +6,24 @@ import UserContext from '../../context/user/userContext'
 const AdminPage = () => {
     const userContext = useContext(UserContext)
     const albumContext = useContext(AlbumContext)
-    const { current } = userContext
-    const { albums, deleteAlbum } = albumContext    
+    const { user } = userContext
+    const { albums, getAlbums, deleteAlbum } = albumContext    
 
     const navigate = useNavigate()
 
     useEffect(()=> {
-        if (!(current && current.name === 'admin')) {
+        if (!(user && user.name === 'admin')) {
             navigate('/')
         }
-    }, [])
+        getAlbums()
+    },[albums,user])
+
+//     useEffect(()=> {
+// console.log("albums updated!")
+//     },[albums])
 
     const onEditClick =(id)=>{
-        navigate(`/admin/album/${id}`)    
+        navigate(`/admin/album/${id}`) 
     }
     
     return (
@@ -26,11 +31,11 @@ const AdminPage = () => {
         <h2><Link to='album'>Create New Album</Link></h2>
         <h2>Your albums: </h2>
             <ul className='albums'>
-            {albums.map((item) =>(   
-                <li key={item._id} >
-                    <p>Title: {item.title}, Year: {item.year}</p> 
-                    <button onClick={()=>onEditClick(item._id)}>Edit</button>
-                    <button onClick={()=>deleteAlbum(item._id)}>Delete</button>
+            {albums.map( album =>(   
+                <li key={album._id} >
+                    <p>Title: {album.title}, Year: {album.year}</p> 
+                    <button onClick={()=>onEditClick(album._id)}>Edit</button>
+                    <button onClick={()=>deleteAlbum(album._id)}>Delete</button>
                 </li>           
             ))} 
             </ul>

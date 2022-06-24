@@ -27,6 +27,11 @@ const albumReducer = (state, action)=>{
                 ...state,
                 albums: action.payload
             }
+        // case GET_ALBUM:
+        //     return {
+        //         ...state,
+        //         album: action.payload
+        //     }
         default:
                 return state
     }

@@ -30,12 +30,14 @@ router.post('/albums', async (req, res )=> {
     }
 })
 
-// // Get album
+// Get album
 
-// router.get('/albums/:id', async(req, res)=> {
-//     const album = await Album.findById(req.params.id)
-//     res.send(album)
-// })
+router.get('/albums/:id', async(req, res)=> {
+    
+    const album = await Album.findById(req.params.id)
+    
+    res.send(album)
+})
 
 // Edit album
 router.post('/albums/:id', async (req, res)=> {

@@ -5,9 +5,9 @@ import UserContext from '../../context/user/userContext'
 const Navbar = () => {
     const userContext = useContext(UserContext)
 
-    const { current } = userContext
+    const { user } = userContext
 
-    if (current && current.name==='admin') {
+    if (user && user.name==='admin') {
         return (<div className='navbar'>
         <ul>
             <li>
@@ -21,7 +21,7 @@ const Navbar = () => {
             </li>        
         </ul>        
         </div> )
-    } else if (current) {
+    } else if (user) {
         return (<div className='navbar'>
         <ul>
             <li>

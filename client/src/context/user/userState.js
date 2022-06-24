@@ -16,7 +16,7 @@ import {
 const UserState = (props)=> {
     const [state, dispatch] = useReducer(UserReducer, {
         users: [],
-        current: null
+        user: null
     })
     
     const config = {
@@ -38,20 +38,19 @@ const UserState = (props)=> {
         }
     }
 
-    const addUser =  async (user) => {
+    const addUser =  async (data) => {
         
         try {
-            const res = await axios.post('http://localhost:4000/users', user, config)
+            const res = await axios.post('http://localhost:4000/users', data, config)
             
             localStorage.setItem('token', res.data.token)   
+            
             setAuthToken()         
             
             dispatch({
                 type: ADD_USER,
                 payload: res.data.user
             })
-
-            return res.data.user
 
         } catch (error) {
             console.log(error)
@@ -66,7 +65,9 @@ const UserState = (props)=> {
                 type: DELETE_USER,
                 payload: res.data
             })
+            
             localStorage.setItem('token', '')
+
         } catch (error) {
             console.log(error)
         }
@@ -81,15 +82,19 @@ const UserState = (props)=> {
                 type: LOAD_USER,
                 payload: res.data
             })
+
         } catch (error) {
             console.log(error)
         }
     }
     
-    const loginUser = async (user) => {
+    const loginUser = async (data) => {
+        
         try {
-            const res = await axios.post('http://localhost:4000/users/login', user)
+            const res = await axios.post('http://localhost:4000/users/login', data)
+            
             localStorage.setItem('token', res.data.token)   
+            
             setAuthToken()   
             
             dispatch({
@@ -97,14 +102,13 @@ const UserState = (props)=> {
                 payload: res.data.user
             })
 
-            return res.data.user
-
         } catch (err) {
             console.log(err)
         }
     }
     
     const logoutUser = async () => {
+        
         try {
             await axios.post('http://localhost:4000/users/logout')
             localStorage.setItem('token', '')   
@@ -122,7 +126,7 @@ const UserState = (props)=> {
         <UserContext.Provider
         value={{
             users: state.users,
-            current: state.current,
+            user: state.user,
             addUser,
             deleteUser,
             loginUser,

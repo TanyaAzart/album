@@ -35,11 +35,26 @@ const AlbumState = (props) => {
         }
     }
 
-    const addAlbum = async (album)=> {
+    // const getAlbum = async (id)=> {
+    //     try {
+    //         const res = await axios.get(`http://localhost:4000/albums/${id}`)
+    
+    //         dispatch({
+    //             type: GET_ALBUM,
+    //             payload: res.data
+    //         })
+
+    //     } catch(err) {
+    //         console.log(err)
+    //     }
+    // }
+
+
+    const addAlbum = async (data)=> {
         
         try {
-            if(!state.albums.find(item => item.title ===album.title)) {
-                const res = await axios.post('http://localhost:4000/albums', album, config)
+            if(!state.albums.find(album => album.title ===data.title)) {
+                const res = await axios.post('http://localhost:4000/albums', data, config)
                 dispatch({
                     type: ADD_ALBUM,
                     payload: res.data
@@ -52,12 +67,12 @@ const AlbumState = (props) => {
         }       
     }
 
-    const editAlbum = async (album)=> {
+    const editAlbum = async (data)=> {
         try {
             
-            const res = await axios.post(`http://localhost:4000/albums/${album._id}`, album)
+            const res = await axios.post(`http://localhost:4000/albums/${data._id}`, data)
 
-            const updatedAlbums = state.albums.filter(item=> item._id !== album._id).concat(res.data)
+            const updatedAlbums = state.albums.filter(album => album._id !== data._id).concat(res.data)
 
             dispatch({
                 type: EDIT_ALBUM,
