@@ -16,11 +16,7 @@ const AdminPage = () => {
             navigate('/')
         }
         getAlbums()
-    },[albums,user])
-
-//     useEffect(()=> {
-// console.log("albums updated!")
-//     },[albums])
+    },[])
 
     const onEditClick =(id)=>{
         navigate(`/admin/album/${id}`) 

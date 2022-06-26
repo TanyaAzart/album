@@ -1,5 +1,5 @@
 const express = require('express')
-// const path = require('path')
+const path = require('path')
 const cors = require('cors')
 
 require('./db/mongoose')
@@ -16,8 +16,9 @@ const corsOptions ={
 
 server.use(cors())
 
+server.use(express.json({limit: '50mb'}));
+// app.use(express.urlencoded({limit: '50mb'}));
 
-server.use(express.json())
 server.use(albumRouter)
 server.use(userRouter)
 

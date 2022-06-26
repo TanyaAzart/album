@@ -1,12 +1,12 @@
 import React from 'react'
-import AlbumForm from './AlbumForm'
+
 
 const EditAlbum = ({ album, onChange, deletePicture, onTitleChange })=> {
     
     return (
         <div>
             <h3>Edit Album</h3>
-            <AlbumForm album ={album} onChange={onChange}/>
+          
             <h3>List of fotos in the album:</h3>
             { album.pics.map( pic => (<div key={pic.name}>
                 <p>{pic.name}</p>

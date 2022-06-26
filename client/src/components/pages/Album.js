@@ -2,7 +2,9 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import CreateAlbum from '../layouts/CreateAlbum'
 import EditAlbum from '../layouts/EditAlbum'
+import AlbumForm from '../layouts/AlbumForm'
 import Previews from '../layouts/Previews'
+import PicturesList from '../layouts/PicturesList'
 import AlbumContext from '../../context/album/albumContext'
 
 
@@ -15,44 +17,46 @@ const Album = () => {
 
     const navigate = useNavigate()    
 
-    const [ album, setAlbum ] = useState({
-        title: '',
-        year: '',
-        descr: '',
-        pics:[]
-    })  
+    const [ album, setAlbum ] = useState({})
 
-    useEffect(()=> {       
-        if(id) {
-            setAlbum(albums.find(album=> album._id === id))       
-        }  
-    },[id, albums]) 
+    // const [ album, setAlbum ] = useState({
+    //     title: '',
+    //     year: '',
+    //     descr: '',
+    //     pics:[]
+    // })  
 
-    useEffect(()=> {
+    // useEffect(()=> {       
+    //     if(id) {
+    //         setAlbum(albums.find(album=> album._id === id))       
+    //     }  
+    // },[album]) 
 
-    },[album])
+    // useEffect(()=> {
+
+    // },[album])
     
 
-    const onChange = (e)=> {  
-        setAlbum({
-            ...album,
-            [e.target.name]: e.target.value
-        })   
-    }
+    // const onChange = (e)=> {  
+    //     setAlbum({
+    //         ...album,
+    //         [e.target.name]: e.target.value
+    //     })   
+    // }
     
-    const onSubmit =(e)=>{
-        e.preventDefault() 
+    // const onSubmit =(e)=>{
+    //     e.preventDefault() 
         
-        if(id) {
-            editAlbum(album)
+    //     if(id) {
+    //         editAlbum(album)
            
-        } else {
-            addAlbum(album)
+    //     } else {
+    //         addAlbum(album)
            
-        }  
-        alert("Album saved!") 
-        navigate('/admin')
-    }
+    //     }  
+    //     alert("Album saved!") 
+    //     navigate('/admin')
+    // }
 
     const addPictures = pics => {        
         
@@ -105,20 +109,15 @@ const Album = () => {
     }
 
      
-    return album? (<div>
-             {id ? <EditAlbum 
-                    album={album} 
-                    onChange={onChange} 
-                    deletePicture={deletePicture}
-                    onTitleChange={onTitleChange}
-                    /> : <CreateAlbum 
-                            album={album} 
-                            onChange={onChange} 
-                            deletePicture={deletePicture}
-                            />}
-             <Previews addPictures={addPictures}/>  
-             <button onClick={onSubmit}>Save</button>
-            </div>)  : (<div>Loading...</div>)               
-        }
+    return (<div>
+        <h3>{id? 'Edit album': 'Create album'}</h3>
+            <AlbumForm id={id} />
+                {id && <PicturesList 
+                        album={album}
+                        deletePicture={deletePicture}
+                        />}
+            <Previews addPictures={addPictures}/>        
+        </div>)             
+}
 
 export default Album

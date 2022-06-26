@@ -7,13 +7,17 @@ import {
     GET_ALBUMS,
     ADD_ALBUM,
     DELETE_ALBUM,
-    EDIT_ALBUM
+    EDIT_ALBUM,
+    SET_CURRENT,
+    ADD_PICTURES,
+    DELETE_PICTURE
 } from '../types'
 
 const AlbumState = (props) => {
 
     const [state, dispatch] = useReducer(AlbumReducer, {
-        albums: []
+        albums: [],
+        current: null
     })  
 
     const config = {
@@ -50,11 +54,15 @@ const AlbumState = (props) => {
     // }
 
 
-    const addAlbum = async (data)=> {
+    const addAlbum = async (album)=> {
         
         try {
-            if(!state.albums.find(album => album.title ===data.title)) {
-                const res = await axios.post('http://localhost:4000/albums', data, config)
+            if(!state.albums.find(item => item.title ===album.title)) {
+
+                
+                
+                const res = await axios.post('http://localhost:4000/albums', album, config)
+                
                 dispatch({
                     type: ADD_ALBUM,
                     payload: res.data
@@ -65,6 +73,16 @@ const AlbumState = (props) => {
         } catch (err) {
             console.log(err)
         }       
+    }
+
+    const addPictures = async (id, pics)=> {
+    
+        await axios.post('http://localhost:4000/upload', {id, pics})
+
+        dispatch({
+            type: ADD_PICTURES
+        }) 
+        
     }
 
     const editAlbum = async (data)=> {
@@ -101,10 +119,12 @@ const AlbumState = (props) => {
         <AlbumContext.Provider
         value={{
             albums: state.albums,
+            current: state.current,
             getAlbums,
             addAlbum,
             deleteAlbum,
-            editAlbum
+            editAlbum,
+            addPictures
         }}
         >
         {props.children}

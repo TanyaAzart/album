@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom'
-import Picture from '../layouts/Picture'
+// import Picture from '../layouts/Picture'
 import AlbumContext from '../../context/album/albumContext'
 
 
@@ -16,7 +16,7 @@ const AlbumView = () => {
         <div>
             <h2>{album.title}</h2>
             <h3>{album.year}</h3>
-            <Picture album={album}/>
+            
         </div>
     )
 }

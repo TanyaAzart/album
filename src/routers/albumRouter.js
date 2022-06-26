@@ -1,6 +1,8 @@
 const express = require('express')
 const Album = require('../models/album')
 const auth = require ('../middleware/auth')
+const path = require('node:path')
+const fs = require('node:fs')
 
 const router = new express.Router()
 
@@ -17,7 +19,7 @@ router.get('/albums', async (req, res )=> {
 })
 
 // Add album
-router.post('/albums', async (req, res )=> {
+router.post('/albums', async (req, res )=> {   
     
     const album = new Album (req.body)
     
@@ -30,21 +32,44 @@ router.post('/albums', async (req, res )=> {
     }
 })
 
-// Get album
-
-router.get('/albums/:id', async(req, res)=> {
-    
-    const album = await Album.findById(req.params.id)
-    
-    res.send(album)
-})
-
 // Edit album
 router.post('/albums/:id', async (req, res)=> {
 
     const album = await Album.findByIdAndUpdate(req.params.id, req.body)
 
     res.send(album)
+})
+
+// Upload images
+router.post('/upload', async (req,res)=> {
+    
+    try {
+        const id = req.body.id
+        const pics = req.body.pics
+
+        const data = []   
+            
+        pics.forEach(pic => {
+
+            const srcData = pic.src.replace(/^data:image\/\w+;base64,/, "");
+
+            const buf = Buffer.from(srcData, 'base64');
+
+            fs.writeFile(`./images/${pic.name}`, buf, (err)=> console.log(err? err : ''));
+
+            data.push({ 
+                name: pic.name,
+                title: pic.title
+            })
+        })
+
+        await Album.findByIdAndUpdate(id, {pics: data})
+
+        res.send()
+
+    } catch (err) {
+        console.log(err)
+    }    
 })
 
 // Delete album

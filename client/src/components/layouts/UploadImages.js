@@ -1,10 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import AlbumContext from '../../context/album/albumContext'
 
-const Previews = (props) => {
+const UploadImages = () => {
 
-    const [pics, setPics ] = useState({
-        pics: []
-    })
+    const albumContext = useContext(AlbumContext)
+    const { addPictures, current } = albumContext
+
+    const navigate = useNavigate()
+
+    const [pics, setPics ] = useState([] )
  
     useEffect(()=>{
         showPreviews()
@@ -26,13 +31,15 @@ const Previews = (props) => {
             const reader = new FileReader();   
        
             reader.addEventListener('load', ()=>{
+                
                 const pic = {
                     name: files[i].name,
                     title: '',
                     src: reader.result
                 }
 
-                updatedPics.push(pic) 
+                updatedPics.push(pic)
+
                 setPics(updatedPics)               
             })
             
@@ -54,6 +61,7 @@ const Previews = (props) => {
     }
 
     const imagePreview = (pic)=> {  
+
         const preview = document.createElement('div')
 
         const image = document.createElement('img')
@@ -76,24 +84,6 @@ const Previews = (props) => {
 
     }
 
-    const removePicture = (pic)=> {
-
-        setPics(pics.filter(item=> item.name !==pic.name))
-
-    }    
-
-    const onAddPictures = ()=> {
-        pics.map(pic=> delete pic.src)
-        props.addPictures(pics)
-
-        while(previews.hasChildNodes()){
-            previews.removeChild(previews.firstChild)
-        }
-        setPics({
-            pics: []
-        })
-    }
-
     const onAddTitle = (e, pic) => {        
         const updatedPics = pics.filter(item=> item.name !==pic.name)
         const updatedPic = pics.find(item=> item.name ===pic.name)       
@@ -114,6 +104,25 @@ const Previews = (props) => {
         }))
     }
 
+    const removePicture = (pic)=> {
+
+        setPics(pics.filter(item=> item.name !==pic.name))
+
+    }    
+
+    
+    const onAddPictures = (e)=> {
+        e.preventDefault()
+        
+        if(pics.length===0){
+            alert('Choose a picture!')
+        } else {  
+
+            addPictures(current, pics)
+            navigate('/admin')
+        }              
+    }    
+
     return (
         <div>
         <h3>Add fotos to your album</h3>
@@ -122,12 +131,13 @@ const Previews = (props) => {
                 multiple
                 onChange={handleFiles}
                 /> 
+
                 <div id="previews">
                 </div> 
-            <button onClick={onAddPictures}>Add pictures</button>        
-            </div>
+            <button onClick={onAddPictures}>Add pictures</button>                    
+        </div>
     )
 }
 
-export default Previews
+export default UploadImages
 

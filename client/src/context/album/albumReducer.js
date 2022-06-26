@@ -2,7 +2,8 @@ import {
     GET_ALBUMS,
     ADD_ALBUM,
     DELETE_ALBUM,
-    EDIT_ALBUM
+    EDIT_ALBUM,
+    ADD_PICTURES
 } from '../types'
 
 const albumReducer = (state, action)=>{
@@ -15,18 +16,24 @@ const albumReducer = (state, action)=>{
         case ADD_ALBUM:
             return {
                 ...state,
-                albums: state.albums.concat(action.payload)
+                albums: state.albums.concat(action.payload),
+                current: action.payload._id
             }
         case DELETE_ALBUM:
             return {
                 ...state,
                 albums: state.albums.filter(album => album._id !==action.payload)
             }
-        case EDIT_ALBUM:
-            return {
-                ...state,
-                albums: action.payload
-            }
+        // case EDIT_ALBUM:
+        //     return {
+        //         ...state,
+        //         albums: action.payload
+        //     }
+        case ADD_PICTURES:
+        return {
+            ...state,
+            current: null
+        }
         // case GET_ALBUM:
         //     return {
         //         ...state,
