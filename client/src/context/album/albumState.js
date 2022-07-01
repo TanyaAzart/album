@@ -9,8 +9,7 @@ import {
     DELETE_ALBUM,
     EDIT_ALBUM,
     SET_CURRENT,
-    ADD_PICTURES,
-    DELETE_PICTURE
+    ADD_PICTURES
 } from '../types'
 
 const AlbumState = (props) => {
@@ -39,27 +38,10 @@ const AlbumState = (props) => {
         }
     }
 
-    // const getAlbum = async (id)=> {
-    //     try {
-    //         const res = await axios.get(`http://localhost:4000/albums/${id}`)
-    
-    //         dispatch({
-    //             type: GET_ALBUM,
-    //             payload: res.data
-    //         })
-
-    //     } catch(err) {
-    //         console.log(err)
-    //     }
-    // }
-
-
     const addAlbum = async (album)=> {
         
         try {
-            if(!state.albums.find(item => item.title ===album.title)) {
-
-                
+            if(!state.albums.find(item => item.title ===album.title)) {                
                 
                 const res = await axios.post('http://localhost:4000/albums', album, config)
                 
@@ -67,6 +49,7 @@ const AlbumState = (props) => {
                     type: ADD_ALBUM,
                     payload: res.data
                 }) 
+
             } else {
                 alert("The album already exists!")
             }             
@@ -75,15 +58,31 @@ const AlbumState = (props) => {
         }       
     }
 
-    const addPictures = async (id, pics)=> {
-    
-        await axios.post('http://localhost:4000/upload', {id, pics})
+    const addPictures = async (albumId, pics)=> {
 
-        dispatch({
-            type: ADD_PICTURES
-        }) 
+        try {
+            const res = await axios.post('http://localhost:4000/upload', { albumId, pics })
+
+            dispatch({
+            type: ADD_PICTURES,
+            payload: res.data
+        })
+
+        } catch (err) {
+            console.log(err)
+        }
         
     }
+
+    const deletePicture = async (id, name) => {
+        
+        try {
+           await axios.post('http://localhost:4000/upload/delete',{ id, name } )
+            
+        } catch (err) {
+            console.log(err)
+        }
+     }
 
     const editAlbum = async (data)=> {
         try {
@@ -115,16 +114,25 @@ const AlbumState = (props) => {
         }        
     }
 
+    const setCurrent = (id)=> {
+        dispatch({
+            type: SET_CURRENT,
+            payload: id
+        })
+    }
+
     return (
         <AlbumContext.Provider
         value={{
             albums: state.albums,
             current: state.current,
+            setCurrent,
             getAlbums,
             addAlbum,
             deleteAlbum,
             editAlbum,
-            addPictures
+            addPictures,
+            deletePicture
         }}
         >
         {props.children}

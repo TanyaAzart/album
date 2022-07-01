@@ -1,28 +1,37 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import AlbumContext from '../../context/album/albumContext'
 
 const UploadImages = () => {
 
     const albumContext = useContext(AlbumContext)
-    const { addPictures, current } = albumContext
+    const { albums, addPictures } = albumContext
 
     const navigate = useNavigate()
+    const { id } = useParams()
+
+    const album = albums.find(album=> album._id=== id)
 
     const [pics, setPics ] = useState([] )
- 
+
+    const previews = document.getElementById('previews')    
+    
+    
     useEffect(()=>{
         showPreviews()
-    },[pics])   
-
-    const previews = document.getElementById('previews')     
-    
-    const fileInput = document.querySelector('input[type="file"]')  
+    },[pics])     
 
 
     const handleFiles = ()=> {
+
+        const fileInput = document.querySelector('input[type="file"]')  
         
         const files = fileInput.files 
+
+        const names = []
+
+        album.pics.forEach(pic=>
+            names.push(pic.name) )
 
         const updatedPics = []
 
@@ -37,8 +46,10 @@ const UploadImages = () => {
                     title: '',
                     src: reader.result
                 }
-
-                updatedPics.push(pic)
+            
+                if(!names.includes(pic.name)){
+                    updatedPics.push(pic)
+                }            
 
                 setPics(updatedPics)               
             })
@@ -118,7 +129,7 @@ const UploadImages = () => {
             alert('Choose a picture!')
         } else {  
 
-            addPictures(current, pics)
+            addPictures(id, pics)
             navigate('/admin')
         }              
     }    
@@ -130,10 +141,9 @@ const UploadImages = () => {
                 type='file'
                 multiple
                 onChange={handleFiles}
-                /> 
-
-                <div id="previews">
-                </div> 
+            /> 
+            <div id="previews">
+            </div> 
             <button onClick={onAddPictures}>Add pictures</button>                    
         </div>
     )

@@ -7,7 +7,7 @@ const AdminPage = () => {
     const userContext = useContext(UserContext)
     const albumContext = useContext(AlbumContext)
     const { user } = userContext
-    const { albums, getAlbums, deleteAlbum } = albumContext    
+    const { albums, getAlbums, deleteAlbum, setCurrent } = albumContext    
 
     const navigate = useNavigate()
 
@@ -16,9 +16,11 @@ const AdminPage = () => {
             navigate('/')
         }
         getAlbums()
+        setCurrent(null)
     },[])
 
     const onEditClick =(id)=>{
+        setCurrent(id)
         navigate(`/admin/album/${id}`) 
     }
     

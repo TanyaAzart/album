@@ -1,23 +1,26 @@
 import React, { useState, useContext, useEffect } from 'react'
-import UploadImages from '../layouts/UploadImages'
+import { useNavigate } from 'react-router-dom'
 import AlbumContext from '../../context/album/albumContext'
 
 
 const CreateAlbum = () => {
 
     const albumContext = useContext(AlbumContext)
-    const { addAlbum } = albumContext   
+    const { current, addAlbum } = albumContext   
+
+    const navigate = useNavigate()
 
     const [ album, setAlbum ] = useState({
         title: '',
         year: '',
-        descr: '',
-        pics:[]
+        descr: ''
     })  
 
     useEffect(()=> {
-
-    },[album])
+        if(current) {
+            navigate(`/admin/album/upload/${current}`)
+        }
+    },[album, current])
     
 
     const onChange = (e)=> {  
@@ -32,12 +35,12 @@ const CreateAlbum = () => {
         
         addAlbum(album)
         
-        alert("Album saved!") 
+        alert("Album created!") 
     }   
      
     return (<div>
         <h3>Create album</h3>
-        <form >
+            <form >
                         <input 
                                 type='text' 
                                 name='title'
@@ -55,9 +58,8 @@ const CreateAlbum = () => {
                                 value={album.descr}
                                 onChange={onChange}/>
                         <label>Description</label>  
-                        <button onClick={onSubmit}>Save</button>                     
-                </form>
-                <UploadImages />        
+                        <button onClick={onSubmit}>Create album</button>                     
+                </form>                   
         </div>)             
 }
 

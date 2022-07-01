@@ -2,7 +2,7 @@ const express = require('express')
 const Album = require('../models/album')
 const auth = require ('../middleware/auth')
 const path = require('node:path')
-const fs = require('node:fs')
+const fs = require('node:fs/promises')
 
 const router = new express.Router()
 
@@ -25,6 +25,7 @@ router.post('/albums', async (req, res )=> {
     
     try {
         await album.save()
+        
         res.status(201).send(album)
     
     } catch (err) {
@@ -35,7 +36,7 @@ router.post('/albums', async (req, res )=> {
 // Edit album
 router.post('/albums/:id', async (req, res)=> {
 
-    const album = await Album.findByIdAndUpdate(req.params.id, req.body)
+    const album = await Album.findOneAndUpdate({_id: req.params.id}, req.body, { new: true})
 
     res.send(album)
 })
@@ -44,73 +45,80 @@ router.post('/albums/:id', async (req, res)=> {
 router.post('/upload', async (req,res)=> {
     
     try {
-        const id = req.body.id
+        const albumId = req.body.albumId
         const pics = req.body.pics
 
-        const data = []   
-            
+        await fs.mkdir(`./images/${albumId}`, { recursive: true })
+
+        const data = []       
+
+        const album = await Album.findById(albumId)
+
+        album.pics.forEach(pic=>{
+            data.push({ 
+                name: pic.name,
+                title: pic.title
+            })
+        })    
+        
         pics.forEach(pic => {
-
-            const srcData = pic.src.replace(/^data:image\/\w+;base64,/, "");
-
-            const buf = Buffer.from(srcData, 'base64');
-
-            fs.writeFile(`./images/${pic.name}`, buf, (err)=> console.log(err? err : ''));
-
             data.push({ 
                 name: pic.name,
                 title: pic.title
             })
         })
+            
+        pics.forEach(async pic => {
 
-        await Album.findByIdAndUpdate(id, {pics: data})
+            const srcData = pic.src.replace(/^data:image\/\w+;base64,/, "");
 
-        res.send()
+            const buf = Buffer.from(srcData, 'base64');
+
+            await fs.writeFile(`./images/${albumId}/${pic.name}`, buf, (err)=> console.log(err));
+
+            
+        })
+
+        const updatedAlbum = await Album.findOneAndUpdate({_id: albumId}, { pics: data }, { new: true})
+
+        res.send(updatedAlbum)
 
     } catch (err) {
         console.log(err)
     }    
 })
 
-// Delete album
-router.post('/albums/delete/:id', auth, async (req,res)=> {    
-    const user = req.user
+// Delete image
+router.post('/upload/delete', async (req,res)=> {
+
+        try {
+            const albumId = req.body.id
+            const picName = req.body.name
+            
+            await fs.unlink(`./images/${albumId}/${picName}`)                
     
-    try { 
-        if (user.name==='admin'){
-            await Album.findByIdAndDelete(req.params.id)
             res.send()
+    
+        } catch (err) {
+            console.log(err)
         } 
+})
+    
+
+// Delete album
+router.post('/albums/delete/:id', async (req,res)=> {
+    
+    try {     
+
+        await fs.rm(`./images/${req.params.id}`, { force: true, recursive: true})
+
+        await Album.findByIdAndDelete(req.params.id)
+        
+        res.send()
+        
     } catch (err) {
         res.status(500).send(err.message)
     }
 })
-
-// // Login user
-// router.post('/users/login', async (req, res) => {
-//     try {
-//         const user = await User.findByCredentials(req.body.email, req.body.password)
-//         const token = await user.generateAuthToken()
-//         res.send({user, token})
-    
-//     } catch (err) {
-//         res.status(400).send(err.message)
-//     }
-// })
-
-// // Logout user
-// router.post('/users/logout', auth, async (req,res)=> {
-//     const user = req.user
-//     try {
-//         user.tokens = user.tokens.filter(token => {
-//             return token.token !== req.token
-//         })
-//         await user.save()
-//         res.send()
-
-//     } catch (err) {
-//         res.status(500).send(err.message)
-//     }
-// })
 
 module.exports = router
