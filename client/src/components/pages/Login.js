@@ -1,12 +1,20 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import UserContext from '../../context/user/userContext'
 
 const Login = () => {
     const userContext = useContext(UserContext)
-    const { user, loginUser, logoutUser } = userContext
+    const { user, loadUser, loginUser, logoutUser } = userContext
 
     const navigate = useNavigate()
+
+    useEffect(()=> {
+        const token = localStorage.getItem('token')        
+        
+        if(token) {
+            loadUser()            
+        }
+    },[])
 
     const onLogin = async (e)=> {
         e.preventDefault()
@@ -14,13 +22,8 @@ const Login = () => {
             email: e.target.email.value,
             password: e.target.password.value
         }
-        loginUser(data) 
-      
-        if(user.name === 'admin') {
-            navigate('/admin')
-        } else {
-            navigate('/')  
-        }          
+        await loginUser(data) 
+        navigate('/admin')       
     }
     
     return (!user ? (<div>

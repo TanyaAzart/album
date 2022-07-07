@@ -6,6 +6,7 @@ require('./db/mongoose')
 
 const albumRouter = require('./routers/albumRouter')
 const userRouter = require('./routers/userRouter')
+const commentRouter = require('./routers/commentRouter')
 
 const server = express()
 const port = process.env.PORT || 4000
@@ -21,6 +22,9 @@ server.use(express.json({limit: '50mb'}));
 
 server.use(albumRouter)
 server.use(userRouter)
+server.use(commentRouter)
+
+server.use(express.static('client/public'))
 
 // if (process.env.NODE_ENV ==='production') {
 //     server.use(express.static('client/build'))

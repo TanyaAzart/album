@@ -144,7 +144,8 @@ const UploadImages = () => {
             /> 
             <div id="previews">
             </div> 
-            <button onClick={onAddPictures}>Add pictures</button>                    
+            <button onClick={onAddPictures}>Add pictures</button> 
+            <button onClick={()=>navigate('/admin')}>Close</button>                    
         </div>
     )
 }

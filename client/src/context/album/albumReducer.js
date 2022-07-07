@@ -34,7 +34,8 @@ const albumReducer = (state, action)=>{
         case EDIT_ALBUM:
             return {
                 ...state,
-                albums: action.payload
+                albums: action.payload,
+                current: null
             }
         case ADD_PICTURES:
         return {

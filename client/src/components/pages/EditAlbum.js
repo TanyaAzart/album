@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import AlbumContext from '../../context/album/albumContext'
+import AlbumForm from '../layouts/AlbumForm'
 
 
 const EditAlbum = ()=> {
@@ -8,6 +9,8 @@ const EditAlbum = ()=> {
     const { albums, editAlbum, deletePicture } = albumContext 
 
     const {id} = useParams()
+
+    const navigate = useNavigate()
 
     const [ album, setAlbum ] = useState({
         title: '',
@@ -38,7 +41,17 @@ const EditAlbum = ()=> {
         
         alert("Album saved!") 
 
+        navigate ('/admin')
+
     }   
+
+    const onAddPictures =()=> {
+        navigate (`/admin/album/upload/${id}`)
+    }
+
+    const onCancel =()=> {
+        navigate('/admin')
+    }
     
     const onDeletePicture = name => {
 
@@ -76,25 +89,7 @@ const EditAlbum = ()=> {
     return (
         <div>
             <h3>Edit Album</h3>
-            <form >
-                        <input 
-                                type='text' 
-                                name='title'
-                                value={album.title}
-                                onChange={onChange}/>
-                        <label>Title</label>
-                        <input 
-                                type='text' 
-                                name='year' 
-                                value={album.year}
-                                onChange={onChange}/>
-                        <label>Year</label>
-                        <textarea 
-                                name='descr'
-                                value={album.descr}
-                                onChange={onChange}/>
-                        <label>Description</label>                     
-                </form>
+            <AlbumForm  album={album} onChange={onChange}/>
             <h3>List of fotos in the album:</h3>
             { album.pics.map( pic => (<div key={pic._id}>
                 <p>{pic.name}</p>
@@ -108,8 +103,8 @@ const EditAlbum = ()=> {
             ) 
             }
             <button onClick={onSubmit}>Save</button> 
-
-            <Link  to={`/admin/album/upload/${id}`}>Add fotos to your album</Link>            
+            <button onClick={onAddPictures}>Add pictures</button> 
+            <button onClick={onCancel}>Cancel</button>      
      </div>)
 }
 

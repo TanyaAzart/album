@@ -50,6 +50,8 @@ const AlbumState = (props) => {
                     payload: res.data
                 }) 
 
+                return res.data
+
             } else {
                 alert("The album already exists!")
             }             
@@ -73,6 +75,19 @@ const AlbumState = (props) => {
         }
         
     }
+
+    // const getPicture = async (id, name) => {
+
+    //     try {
+    //         const res = await axios.get(`http://localhost:4000/albums/${id}/${name}`)
+
+    //         const data = await res.data.toString('base64')
+    //         return (data)
+
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // }
 
     const deletePicture = async (id, name) => {
         
@@ -126,7 +141,6 @@ const AlbumState = (props) => {
         value={{
             albums: state.albums,
             current: state.current,
-            setCurrent,
             getAlbums,
             addAlbum,
             deleteAlbum,

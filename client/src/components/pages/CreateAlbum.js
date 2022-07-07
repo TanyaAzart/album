@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AlbumContext from '../../context/album/albumContext'
-
+import AlbumForm from '../layouts/AlbumForm'
 
 const CreateAlbum = () => {
 
     const albumContext = useContext(AlbumContext)
-    const { current, addAlbum } = albumContext   
+    const { addAlbum, current } = albumContext   
 
     const navigate = useNavigate()
 
@@ -17,10 +17,10 @@ const CreateAlbum = () => {
     })  
 
     useEffect(()=> {
-        if(current) {
+        if(current) {           
             navigate(`/admin/album/upload/${current}`)
         }
-    },[album, current])
+    },[current])
     
 
     const onChange = (e)=> {  
@@ -37,29 +37,16 @@ const CreateAlbum = () => {
         
         alert("Album created!") 
     }   
+
+    const onCancel = ()=> {
+        navigate('/admin')
+    }
      
     return (<div>
         <h3>Create album</h3>
-            <form >
-                        <input 
-                                type='text' 
-                                name='title'
-                                value={album.title}
-                                onChange={onChange}/>
-                        <label>Title</label>
-                        <input 
-                                type='text' 
-                                name='year' 
-                                value={album.year}
-                                onChange={onChange}/>
-                        <label>Year</label>
-                        <textarea 
-                                name='descr'
-                                value={album.descr}
-                                onChange={onChange}/>
-                        <label>Description</label>  
-                        <button onClick={onSubmit}>Create album</button>                     
-                </form>                   
+        <AlbumForm  album={album} onChange={onChange}/> 
+        <button onClick={onSubmit}>Create Album</button> 
+        <button onClick={onCancel}>Cancel</button>                
         </div>)             
 }
 

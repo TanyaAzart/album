@@ -5,6 +5,15 @@ const commentSchema = mongoose.Schema ({
         type: String,
         required:true
     },
+    pic: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true
+    },
+    album: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Album"
+    },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

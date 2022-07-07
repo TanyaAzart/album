@@ -48,7 +48,9 @@ router.post('/upload', async (req,res)=> {
         const albumId = req.body.albumId
         const pics = req.body.pics
 
-        await fs.mkdir(`./images/${albumId}`, { recursive: true })
+        const albumDir = path.join(__dirname,`../../client/public/images/${albumId}` )
+        
+        await fs.mkdir(albumDir, { recursive: true })
 
         const data = []       
 
@@ -74,9 +76,9 @@ router.post('/upload', async (req,res)=> {
 
             const buf = Buffer.from(srcData, 'base64');
 
-            await fs.writeFile(`./images/${albumId}/${pic.name}`, buf, (err)=> console.log(err));
+            const file = path.join(albumDir,`/${pic.name}` )
 
-            
+            await fs.writeFile(file, buf, (err)=> console.log(err));            
         })
 
         const updatedAlbum = await Album.findOneAndUpdate({_id: albumId}, { pics: data }, { new: true})
@@ -94,8 +96,10 @@ router.post('/upload/delete', async (req,res)=> {
         try {
             const albumId = req.body.id
             const picName = req.body.name
+
+            const pathToFile = path.join(__dirname, `../../client/public/images/${albumId}/${picName}`)
             
-            await fs.unlink(`./images/${albumId}/${picName}`)                
+            await fs.unlink(pathToFile)                
     
             res.send()
     
@@ -109,8 +113,9 @@ router.post('/upload/delete', async (req,res)=> {
 router.post('/albums/delete/:id', async (req,res)=> {
     
     try {     
+        const albumDir = path.join(__dirname,`../../client/public/images/${req.params.id}` )
 
-        await fs.rm(`./images/${req.params.id}`, { force: true, recursive: true})
+        await fs.rm(albumDir, { force: true, recursive: true})
 
         await Album.findByIdAndDelete(req.params.id)
         

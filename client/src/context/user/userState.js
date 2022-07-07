@@ -14,6 +14,7 @@ import {
 } from '../types'
 
 const UserState = (props)=> {
+    
     const [state, dispatch] = useReducer(UserReducer, {
         users: [],
         user: null
@@ -23,6 +24,21 @@ const UserState = (props)=> {
         headers: {
             'Content-Type': 'application/json'
         }}
+
+    const loadUser = async () => {
+    
+        try {
+            const res = await axios.get('http://localhost:4000/users/login')
+
+            dispatch({
+                type: LOAD_USER,
+                payload: res.data
+            })
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const getUsers = async ()=> {
         try {
@@ -73,20 +89,7 @@ const UserState = (props)=> {
         }
     }
 
-    const loadUser = async () => {
-        
-        try {
-            const res = await axios.get('http://localhost:4000/users/login')
-
-            dispatch({
-                type: LOAD_USER,
-                payload: res.data
-            })
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    
     
     const loginUser = async (data) => {
         

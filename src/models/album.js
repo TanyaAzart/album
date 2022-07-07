@@ -24,11 +24,17 @@ const albumSchema = new mongoose.Schema({
     
  }, { timestamps: true })
 
-//  albumSchema.virtual("pictures", {
-//     ref: "Picture",
-//     localField: "_id",
-//     foreignField: "owner"
-// })
+ albumSchema.virtual("comments", {
+    ref: "Comment",
+    localField: "_id",
+    foreignField: "album"
+})
+
+albumSchema.pre("remove", async function (next) {
+    const album = this
+    await Comment.deleteMany({ album })
+    next()
+})
 
 
 const Album = mongoose.model("Album", albumSchema)
