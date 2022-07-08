@@ -1,8 +1,10 @@
+import { STATES } from 'mongoose'
 import {
     ADD_COMMENT,
     DELETE_COMMENT,
     EDIT_COMMENT,
-    GET_COMMENTS
+    GET_COMMENTS,
+    DELETE_COMMENTS
 } from '../types'
 
 const commentReducer = (state, action)=>{
@@ -11,6 +13,11 @@ const commentReducer = (state, action)=>{
             return {
                 ...state,
                 comments: action.payload
+            }
+        case DELETE_COMMENTS:
+            return {
+                ...state,
+                comments: state.comments.filter(comment => comment.owner!==action.payload)
             }
         case ADD_COMMENT:
             return {

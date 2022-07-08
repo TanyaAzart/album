@@ -30,11 +30,11 @@ const albumSchema = new mongoose.Schema({
     foreignField: "album"
 })
 
-albumSchema.pre("remove", async function (next) {
-    const album = this
-    await Comment.deleteMany({ album })
-    next()
-})
+// albumSchema.pre("remove", async function (next) {
+//     const album = this
+//     await Comment.deleteMany({ album })
+//     next()
+// })
 
 
 const Album = mongoose.model("Album", albumSchema)

@@ -89,10 +89,10 @@ const AlbumState = (props) => {
     //     }
     // }
 
-    const deletePicture = async (id, name) => {
+    const deletePicture = async (id, pic) => {
         
         try {
-           await axios.post('http://localhost:4000/upload/delete',{ id, name } )
+           await axios.post('http://localhost:4000/upload/delete',{ id, pic } )
             
         } catch (err) {
             console.log(err)
@@ -124,6 +124,8 @@ const AlbumState = (props) => {
                 type: DELETE_ALBUM,
                 payload: id
             }) 
+
+            
             } catch (err) {
             console.log(err)
         }        

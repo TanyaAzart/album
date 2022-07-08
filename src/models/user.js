@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const validator = require("validator")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
-const Comment = require("./comment")
+
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -49,7 +49,7 @@ userSchema.methods.toJSON = function () {
     const userObject = user.toObject()
     delete userObject.password
     delete userObject.tokens
-    delete userObject.avatar
+    // delete userObject.avatar
 
     return userObject
 }
@@ -87,11 +87,11 @@ userSchema.pre("save", async function (next){
     next()
 })
 
-userSchema.pre("remove", async function (next) {
-    const user = this
-    await Comment.deleteMany({ owner: user})
-    next()
-})
+// userSchema.pre("remove",{ document: true, query: false }, async function (next) {
+//     const user = this
+//     await Comment.deleteMany({ owner: user})
+//     next()
+// })
 
 const User = mongoose.model("User", userSchema)
 

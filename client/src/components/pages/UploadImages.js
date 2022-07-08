@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext, useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import AlbumContext from '../../context/album/albumContext'
 
@@ -9,6 +9,7 @@ const UploadImages = () => {
 
     const navigate = useNavigate()
     const { id } = useParams()
+    const inputRef = useRef(null)
 
     const album = albums.find(album=> album._id=== id)
 
@@ -139,9 +140,12 @@ const UploadImages = () => {
         <h3>Add fotos to your album</h3>
             <input 
                 type='file'
+                style={{display: 'none'}}
+                ref={inputRef}
                 multiple
                 onChange={handleFiles}
             /> 
+            <button onClick={()=>inputRef.current.click()}>Choose Files</button>
             <div id="previews">
             </div> 
             <button onClick={onAddPictures}>Add pictures</button> 

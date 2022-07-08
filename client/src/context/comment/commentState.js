@@ -2,7 +2,6 @@ import React, { useReducer } from 'react'
 import axios from 'axios'
 import CommentContext from './commentContext'
 import CommentReducer from './commentReducer'
-import setAuthToken from '../../utils/setAuthToken'
 
 import {
     ADD_COMMENT,

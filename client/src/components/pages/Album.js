@@ -15,11 +15,11 @@ const Album = () => {
 
     const { id } = useParams() 
 
-    const album = albums.filter(item => item._id === id)[0]
-
-    useEffect(()=> {  
+    useEffect(()=> { 
         getComments(id)              
     },[])
+
+    const album = albums.filter(item => item._id === id)[0]
     
     const [ index, setIndex ] = useState(0)
 

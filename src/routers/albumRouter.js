@@ -1,5 +1,6 @@
 const express = require('express')
 const Album = require('../models/album')
+const Comment = require('../models/comment')
 const auth = require ('../middleware/auth')
 const path = require('node:path')
 const fs = require('node:fs/promises')
@@ -95,11 +96,14 @@ router.post('/upload/delete', async (req,res)=> {
 
         try {
             const albumId = req.body.id
-            const picName = req.body.name
+            const picName = req.body.pic.name
+            const picId = req.body.pic._id
 
             const pathToFile = path.join(__dirname, `../../client/public/images/${albumId}/${picName}`)
             
-            await fs.unlink(pathToFile)                
+            await fs.unlink(pathToFile)   
+            
+            await Comment.deleteMany({album: albumId, pic: picId})
     
             res.send()
     
@@ -118,6 +122,8 @@ router.post('/albums/delete/:id', async (req,res)=> {
         await fs.rm(albumDir, { force: true, recursive: true})
 
         await Album.findByIdAndDelete(req.params.id)
+
+        await Comment.deleteMany({album: req.params.id})
         
         res.send()
         

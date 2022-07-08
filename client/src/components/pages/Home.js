@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import UserContext from '../../context/user/userContext'
 import AlbumContext from '../../context/album/albumContext'
-import { GET_USERS } from '../../context/types'
+
 
 const Home = () => {
     const userContext = useContext(UserContext)

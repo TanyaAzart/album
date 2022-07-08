@@ -28,11 +28,12 @@ const Comments = ({ picComments }) => {
         setCurrent(null)
     }
 
-
     return (<div>
         { picComments.map(comment => (<div key ={comment._id} >
             { (!current || (comment._id !== current._id)) && (<span>
+                <img src={`data:image/png;base64, ${users.find(user=> user._id ===comment.owner).avatar}`} style={{width: '100px'}}/>
                 <span>{users.find(user=> user._id === comment.owner).name}</span>
+                <span>{comment.createdAt.slice(0,10)}</span>
                 <span>{comment.text}</span>
             
             { (user._id === comment.owner || user.name === 'admin') &&(<span>
@@ -44,8 +45,10 @@ const Comments = ({ picComments }) => {
                 <input type='text' value={current.text} onChange={onChange}/>
                 <button onClick ={saveChanges}>Save changes</button>
             </span> ) }
-
-            <button onClick={()=> deleteComment(comment._id)}>X</button>
+            { (user._id === comment.owner || user.name === 'admin') &&
+                (<button onClick={()=> deleteComment(comment._id)}>X</button>)
+            }
+            
             </div> 
             )
             )
@@ -54,3 +57,5 @@ const Comments = ({ picComments }) => {
 }
 
 export default Comments
+
+//<img src={Buffer.from(user.avatar, 'base64')}/>

@@ -53,13 +53,13 @@ const EditAlbum = ()=> {
         navigate('/admin')
     }
     
-    const onDeletePicture = name => {
+    const onDeletePicture = pic => {
 
-        deletePicture(id, name)
+        deletePicture(id, pic)
 
         setAlbum({
             ...album,
-            pics: album.pics.filter(pic => pic.name !== name)
+            pics: album.pics.filter(item => item.name !== pic.name)
         }) 
         
     }
@@ -98,7 +98,7 @@ const EditAlbum = ()=> {
                     placeholder={pic.title}
                     onChange= {(e)=>onTitleChange(e, pic.name)}
                     />
-                <button onClick={()=> onDeletePicture(pic.name)}>Delete picture</button>
+                <button onClick={()=> onDeletePicture(pic)}>Delete picture</button>
             </div>)
             ) 
             }

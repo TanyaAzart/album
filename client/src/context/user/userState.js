@@ -73,6 +73,21 @@ const UserState = (props)=> {
         }
     }
 
+    const uploadAvatar = async (file)=> {
+        try {
+            const fd = new FormData()
+            
+            fd.append('avatar', file, file.name)
+            
+            const res = await axios.post('http://localhost:4000/users/avatar', fd)
+            console.log(res)
+
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
+
     const deleteUser = async () => {
         try {
             const res = await axios.post('http://localhost:4000/users/delete')
@@ -135,7 +150,8 @@ const UserState = (props)=> {
             loginUser,
             logoutUser,
             loadUser,
-            getUsers
+            getUsers,
+            uploadAvatar
         }}
         >
         {props.children}
