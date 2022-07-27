@@ -19,3 +19,6 @@ export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const EDIT_COMMENT = 'EDIT_COMMENT'
 export const GET_COMMENTS = 'GET_COMMENTS'
 export const DELETE_COMMENTS = 'DELETE_COMMENTS'
+
+export const SET_ALERT = 'SET_ALERT'
+export const REMOVE_ALERT = 'REMOVE_ALERT'

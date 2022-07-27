@@ -11,6 +11,7 @@ import Album from './components/pages/Album'
 import Navbar from './components/layouts/Navbar' 
 import AlbumState from './context/album/albumState'
 import UserState from './context/user/userState'
+import AlertState from './context/alert/alertState'
 import CommentState from './context/comment/commentState'
 import './App.css'
 import setAuthToken from './utils/setAuthToken'
@@ -24,7 +25,8 @@ const App= ()=> {
     <AlbumState>
     <UserState>
     <CommentState>
-      <div className="App">
+    <AlertState>
+      <div>
       <Router>
       <Navbar />
         <Routes>
@@ -39,10 +41,10 @@ const App= ()=> {
         </Routes>
       </Router>
     </div>
+    </AlertState>
     </CommentState>
     </UserState>
-    </AlbumState>
-    
+    </AlbumState>  
   );
 }
 

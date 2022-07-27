@@ -1,11 +1,17 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import AlbumContext from '../../context/album/albumContext'
+import AlertContext from '../../context/alert/alertContext'
+import Modal from '../layouts/Modal'
+import { v4 as uuidv4 } from 'uuid'
 
 const UploadImages = () => {
 
     const albumContext = useContext(AlbumContext)
     const { albums, addPictures } = albumContext
+
+    const alertContext = useContext(AlertContext)
+    const { alert, setAlert, removeAlert } = alertContext
 
     const navigate = useNavigate()
     const { id } = useParams()
@@ -13,7 +19,7 @@ const UploadImages = () => {
 
     const album = albums.find(album=> album._id=== id)
 
-    const [pics, setPics ] = useState([] )
+    const [ pics, setPics ] = useState([] )
 
     const previews = document.getElementById('previews')    
     
@@ -29,12 +35,14 @@ const UploadImages = () => {
         
         const files = fileInput.files 
 
-        const names = []
+        // const names = []
 
-        album.pics.forEach(pic=>
-            names.push(pic.name) )
+        // album.pics.forEach(pic=>
+        //     names.push(pic.name) )
 
-        const updatedPics = []
+        // const updatedPics = []
+
+        const picSet = []
 
         for (let i=0; i < files.length; i++) {
 
@@ -43,16 +51,20 @@ const UploadImages = () => {
             reader.addEventListener('load', ()=>{
                 
                 const pic = {
-                    name: files[i].name,
+                    // name: files[i].name,
+                    name: uuidv4(),
                     title: '',
                     src: reader.result
                 }
-            
-                if(!names.includes(pic.name)){
-                    updatedPics.push(pic)
-                }            
+                
+                
+                // if(!names.includes(pic.name)){
+                //     updatedPics.push(pic)
+                // }            
 
-                setPics(updatedPics)               
+                // setPics(updatedPics) 
+                picSet.push(pic)   
+                setPics(picSet)           
             })
             
             reader.readAsDataURL(files[i])            
@@ -127,16 +139,31 @@ const UploadImages = () => {
         e.preventDefault()
         
         if(pics.length===0){
-            alert('Choose a picture!')
+           setAlert({
+            alert: true,
+            text: 'Choose a picture!',
+            yesButton: 'OK',
+            noButton: null
+           })
         } else {  
-
             addPictures(id, pics)
-            navigate('/admin')
+            setAlert({
+                alert: true,
+                text:'Pictures added!',
+                yesButton:'OK',
+                noButton:null
+            })
         }              
-    }    
+    }   
+    
+    const handleAlert =()=> {
+        removeAlert()
+        // navigate('/admin')
+    }
 
     return (
         <div>
+        { alert && <Modal handleAlert={handleAlert}/>}
         <h3>Add fotos to your album</h3>
             <input 
                 type='file'

@@ -1,12 +1,17 @@
 import React, { useState, useContext, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import Modal from '../layouts/Modal'
 import UserContext from '../../context/user/userContext'
+import AlertContext from '../../context/alert/alertContext'
 
 
 const Register = () => {   
    const navigate = useNavigate()
    const userContext = useContext(UserContext)
    const { user, addUser, deleteUser, uploadAvatar } = userContext
+
+   const alertContext = useContext(AlertContext)
+   const { alert, setAlert, removeAlert } = alertContext
 
    const [ avatar, setAvatar ] = useState(null)
 
@@ -33,8 +38,24 @@ const Register = () => {
    }
 
    const inputRef = useRef(null)
+
+   const onUploadAvatar = ()=> {
+         uploadAvatar(avatar)
+         setAlert({
+            alert: true,
+            text: 'Avatar uploaded!',
+            yesButton: 'OK',
+            noButton: null
+         })
+   }
+
+   const handleAlert =()=> {
+      removeAlert()
+   }
    
-   return (user ? (<div>
+   return (<div>
+      {alert && <Modal handleAlert ={handleAlert}/>}
+      {user ? (<div>
          <h2>Add Avatar to Your Account!</h2>
          <input 
             type="file" 
@@ -43,7 +64,7 @@ const Register = () => {
             onChange={chooseAvatar} 
          />
          <button onClick={()=>inputRef.current.click()}>Choose File</button>
-         <button onClick={()=>uploadAvatar(avatar)}>Upload</button> 
+         <button onClick={onUploadAvatar}>Upload</button> 
          <h3>Would you like to delete your account?</h3>
          <button onClick={deleteUser}>Delete Account</button>
          </div>) : (<div>
@@ -59,7 +80,9 @@ const Register = () => {
          </form>
          <h3>Already registered?</h3>
          <Link to='/login'>Login here!</Link>
-      </div>))         
+      </div>)}
+      </div>
+      )         
 }
 
 export default Register

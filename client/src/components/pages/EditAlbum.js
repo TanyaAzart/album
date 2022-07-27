@@ -1,12 +1,18 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import AlbumContext from '../../context/album/albumContext'
 import AlbumForm from '../layouts/AlbumForm'
+import Modal from '../layouts/Modal'
+import AlertContext from '../../context/alert/alertContext'
+import AlbumContext from '../../context/album/albumContext'
+
 
 
 const EditAlbum = ()=> {
     const albumContext = useContext(AlbumContext)
     const { albums, editAlbum, deletePicture } = albumContext 
+
+    const alertContext = useContext(AlertContext)
+    const { alert, setAlert, removeAlert  } = alertContext
 
     const {id} = useParams()
 
@@ -39,10 +45,11 @@ const EditAlbum = ()=> {
        
         editAlbum(album)
         
-        alert("Album saved!") 
-
-        navigate ('/admin')
-
+        setAlert({
+            alert: true,
+            text: 'Album Saved!',
+            yesButton: 'OK'
+        }) 
     }   
 
     const onAddPictures =()=> {
@@ -86,13 +93,19 @@ const EditAlbum = ()=> {
         })   
     }
 
+    const handleAlert=()=> {
+        removeAlert()
+        navigate ('/admin')
+    }
+
     return (
         <div>
+        { alert && <Modal handleAlert={handleAlert}/>}
             <h3>Edit Album</h3>
             <AlbumForm  album={album} onChange={onChange}/>
             <h3>List of fotos in the album:</h3>
             { album.pics.map( pic => (<div key={pic._id}>
-                <p>{pic.name}</p>
+                
                 <input 
                     type='text'
                     placeholder={pic.title}

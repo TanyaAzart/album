@@ -5,21 +5,19 @@ import AddComment from '../layouts/AddComment'
 import AlbumContext from '../../context/album/albumContext'
 import CommentContext from '../../context/comment/commentContext'
 
-
 const Album = () => {
     const albumContext = useContext(AlbumContext)
     const { albums } = albumContext  
 
     const commentContext = useContext(CommentContext)
-    const { getComments, comments } = commentContext  
+    const { getComments, comments } = commentContext     
 
     const { id } = useParams() 
-
-    useEffect(()=> { 
-        getComments(id)              
-    },[])
-
     const album = albums.filter(item => item._id === id)[0]
+    
+    useEffect(()=> {     
+            getComments(id)                     
+    },[])   
     
     const [ index, setIndex ] = useState(0)
 

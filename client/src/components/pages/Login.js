@@ -1,10 +1,15 @@
 import React, { useContext, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import Modal from '../layouts/Modal'
 import UserContext from '../../context/user/userContext'
+import AlertContext from '../../context/alert/alertContext'
 
 const Login = () => {
     const userContext = useContext(UserContext)
     const { user, loadUser, loginUser, logoutUser } = userContext
+
+    const alertContext = useContext(AlertContext)
+    const { alert } = alertContext
 
     const navigate = useNavigate()
 
@@ -23,10 +28,12 @@ const Login = () => {
             password: e.target.password.value
         }
         await loginUser(data) 
-        navigate('/admin')       
+        // navigate('/admin')       
     }
     
-    return (!user ? (<div>
+    return (<div>
+        { alert && <Modal />}
+        {!user ? (<div>
         <h2>Would you like to login?</h2>
         <form onSubmit={onLogin}>
             <label>E-mail</label>
@@ -41,7 +48,8 @@ const Login = () => {
         </div>) : (<div>
             <h2>Would you like to logout?</h2>       
             <button onClick={logoutUser}>Logout</button>       
-        </div>))         
+        </div>)}
+        </div>)         
 }
 
 export default Login
