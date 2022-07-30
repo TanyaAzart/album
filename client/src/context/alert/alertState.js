@@ -11,7 +11,7 @@ const AlertState = (props) => {
 
     const [state, dispatch] = useReducer(AlertReducer, {
         alert: false,
-        header: 'WARNING',
+        header: '',
         text: '',
         yesButton: '',
         noButton: null

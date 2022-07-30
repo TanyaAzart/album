@@ -10,8 +10,7 @@ import {
     LOGIN_USER,
     LOGOUT_USER,
     LOAD_USER,
-    GET_USERS,
-    SET_ALERT
+    GET_USERS
 } from '../types'
 
 const UserState = (props)=> {
@@ -69,8 +68,9 @@ const UserState = (props)=> {
                 payload: res.data.user
             })
 
-        } catch (error) {
-            console.log(error)
+        } catch (err) {
+           
+            return err.response.data
         }
     }
 
@@ -99,12 +99,11 @@ const UserState = (props)=> {
             
             localStorage.setItem('token', '')
 
-        } catch (error) {
-            console.log(error)
+        } catch (err) {
+           
+            return err.response.data
         }
-    }
-
-    
+    }    
     
     const loginUser = async (data) => {
         
@@ -121,9 +120,7 @@ const UserState = (props)=> {
             })
 
         } catch (err) {
-            alert(err.response.data)
-
-            // console.log(err.response.data)
+            return err.response.data
         }
     }
     

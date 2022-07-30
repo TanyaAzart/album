@@ -55,20 +55,15 @@ const EditAlbum = ()=> {
     const onAddPictures =()=> {
         navigate (`/admin/album/upload/${id}`)
     }
-
-    const onCancel =()=> {
-        navigate('/admin')
-    }
     
     const onDeletePicture = pic => {
-
+        
         deletePicture(id, pic)
 
         setAlbum({
             ...album,
             pics: album.pics.filter(item => item.name !== pic.name)
-        }) 
-        
+        })         
     }
 
     const onTitleChange = (e, name)=> {  
@@ -93,31 +88,37 @@ const EditAlbum = ()=> {
         })   
     }
 
-    const handleAlert=()=> {
-        removeAlert()
-        navigate ('/admin')
-    }
-
     return (
-        <div>
-        { alert && <Modal handleAlert={handleAlert}/>}
+        <div className='ui center aligned container'>
+        { alert && <Modal handleAlert={removeAlert}/>}
             <h3>Edit Album</h3>
-            <AlbumForm  album={album} onChange={onChange}/>
-            <h3>List of fotos in the album:</h3>
-            { album.pics.map( pic => (<div key={pic._id}>
-                
-                <input 
-                    type='text'
-                    placeholder={pic.title}
-                    onChange= {(e)=>onTitleChange(e, pic.name)}
-                    />
-                <button onClick={()=> onDeletePicture(pic)}>Delete picture</button>
-            </div>)
-            ) 
-            }
-            <button onClick={onSubmit}>Save</button> 
-            <button onClick={onAddPictures}>Add pictures</button> 
-            <button onClick={onCancel}>Cancel</button>      
+            <form className='ui mini form'>
+            <AlbumForm  album={album} onChange={onChange}/>             
+            </form> 
+            {album.pics.length===0 && <h3>Add pictures to the album!</h3>}           
+            {album.pics.length>0 && <h3>List of fotos in the album:</h3>}
+            
+                <div className='ui horizontal list'>
+                    { album.pics.map( pic => (<div className='item' key={pic._id}>
+                    <div className='ui action input'>                
+                    <input 
+                        type='text'
+                        placeholder={pic.title}
+                        onChange= {(e)=>onTitleChange(e, pic.name)}
+                        />
+                    <button onClick={()=> onDeletePicture(pic)}>Delete</button>               
+                    </div>            
+                    </div>)
+                    )}   
+                </div>
+            <div style={{'paddingTop':'20px'}}>
+            <button className='ui primary button' onClick={onSubmit}>Save</button> 
+            <button className='ui button' onClick={()=> navigate('/admin')}>Cancel</button> 
+            </div>
+            <div style={{'paddingTop':'20px'}}>
+            <button className='ui basic primary button' onClick={onAddPictures}>Add pictures</button>  
+            </div>
+                        
      </div>)
 }
 

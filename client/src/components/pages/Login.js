@@ -9,7 +9,7 @@ const Login = () => {
     const { user, loadUser, loginUser, logoutUser } = userContext
 
     const alertContext = useContext(AlertContext)
-    const { alert } = alertContext
+    const { alert, setAlert, removeAlert } = alertContext
 
     const navigate = useNavigate()
 
@@ -21,33 +21,49 @@ const Login = () => {
         }
     },[])
 
-    const onLogin = async (e)=> {
-        e.preventDefault()
-        const data = {
-            email: e.target.email.value,
-            password: e.target.password.value
-        }
-        await loginUser(data) 
-        // navigate('/admin')       
+    const onLogin = async (e)=> {       
+            e.preventDefault()
+            const data = {
+                email: e.target.email.value,
+                password: e.target.password.value
+            }
+            const res = await loginUser(data) 
+
+            if (res==='Unable to login'){
+                setAlert({
+                alert: true,
+                header:'AUTHENTICATION ERROR',
+                text:'Unable to login!',
+                yesButton: 'OK'
+            })  
+            } else {
+                navigate('/admin')   
+            }                    
     }
     
-    return (<div>
-        { alert && <Modal />}
+    return (<div className='ui center aligned container'>
+        { alert && <Modal handleAlert={()=>removeAlert()}/>}
         {!user ? (<div>
-        <h2>Would you like to login?</h2>
-        <form onSubmit={onLogin}>
-            <label>E-mail</label>
-            <input type="text/html" name="email" placeholder="Enter e-mail"/>
-            <label>Password</label>
-            <input type="text/html" name="password" placeholder="Enter password"/>        
-            <button>Submit</button>
+        <h2 className='ui blue header'>Would you like to login?</h2>
+        <form className='ui mini form' onSubmit={onLogin}>
+            <div className='two fields'>
+            <div className='field'>
+                <label>E-mail</label>
+                <input type="text" name="email" placeholder="Enter e-mail"/>
+            </div> 
+            <div className='field'>   
+                <label>Password</label>
+                <input type="text" name="password" placeholder="Enter password"/>
+            </div>      
+        </div>
+            <button className='ui primary submit button'>Submit</button>              
         </form>
         <h3>Not registered?</h3>
-        <Link to='/register'>Register here!</Link>
+        <h3><Link to='/register'>Register here!</Link></h3>
 
         </div>) : (<div>
-            <h2>Would you like to logout?</h2>       
-            <button onClick={logoutUser}>Logout</button>       
+            <h2 className='ui blue header'>Would you like to logout?</h2>       
+            <button className='ui  button' onClick={logoutUser}>Logout</button>       
         </div>)}
         </div>)         
 }

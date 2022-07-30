@@ -7,50 +7,35 @@ const Navbar = () => {
 
     const { user } = userContext
 
-    if (user && user.name==='admin') {
-        return (<div className='navbar'>
+    if (user) {
+        return (<div className='ui item menu'>
         <ul>
-            <li>
-            <NavLink to='/'>Home</NavLink>
+            <li className='item'>
+            <NavLink  to='/'>Home</NavLink>
             </li>
-            <li>
-            <NavLink to='/admin'>AdminPage</NavLink>
-            </li>
-            <li>
-            <NavLink to='/register'>Register</NavLink>
-            </li>
-            <li>
+            { user.name==='admin' && <li className='item'>
+                <NavLink  to='/admin'>AdminPage</NavLink>
+            </li>}
+            { user.name!=='admin' && <li className='item'>
+            <NavLink  to='/register'>Register</NavLink>
+            </li>}
+            <li className='item'>
             <NavLink to='/login'>Login</NavLink>
             </li>        
         </ul>        
         </div> )
-    } else if (user) {
-        return (<div className='navbar'>
-        <ul>
-            <li>
-            <NavLink to='/'>Home</NavLink>
-            </li>
-            <li>
-            <NavLink to='/register'>Register</NavLink>
-            </li>
-            <li>
-            <NavLink to='/login'>Login</NavLink>
-            </li>        
-        </ul>        
-    </div>) 
     } else {
-        return (<div className='navbar'>
+        return (<div className='ui item menu'>
         <ul>
-            <li>
+            <li className='item'>
             <NavLink to='/register'>Register</NavLink>
             </li>
-            <li>
+            <li className='item'>
             <NavLink to='/login'>Login</NavLink>
             </li>        
         </ul>        
     </div>) 
-    }
-        
+    }        
 }
 
 export default Navbar

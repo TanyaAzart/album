@@ -12,7 +12,7 @@ const CreateAlbum = () => {
     const { addAlbum, current } = albumContext 
     
     const alertContext = useContext(AlertContext)
-    const { alert, setAlert  } = alertContext
+    const { alert, setAlert, removeAlert  } = alertContext
 
     const navigate = useNavigate()
 
@@ -36,40 +36,50 @@ const CreateAlbum = () => {
         })   
     }
     
-    const onSubmit =(e)=>{
+    const onSubmit = async (e)=>{
         e.preventDefault() 
         
-        addAlbum(album)
+        const res = await addAlbum(album)
 
-        setAlert({
-            alert: true,
-            text: 'Album Created!',
-            yesButton: 'OK',
-            noButton: ''
-        })       
+        if (res && res.indexOf('failed')!==-1){
+            setAlert({
+                alert: true,
+                header: 'CREATE FAILED',
+                text:'Complete all fields!',
+                yesButton: null,
+                noButton:'OK'
+            })
+        } else {
+            setAlert({
+                alert: true,
+                header: 'SUCCESS',
+                text: 'Album Created!',
+                yesButton: 'OK',
+                noButton: null
+            })
+
+        }               
     }   
+
+    const handleAlert =()=> {
+        removeAlert()
+        navigate(`/admin/album/upload/${current}`)
+    }
 
     const onCancel = ()=> {
         navigate('/admin')
     }
 
-    const handleAlert=()=> {
-        setAlert({
-            alert: false,
-            header: 'Warning!',
-            text: '',
-            yesButton: '',
-            noButton: ''
-        })
-        navigate(`/admin/album/upload/${current}`)
-    }
      
-    return (<div>
+    return (<div className='ui center aligned container'>
         {alert && <Modal handleAlert={handleAlert}/>}
-        <h3>Create album</h3>
+        <h3 className='ui blue header'>Album Info</h3>
+        <form className='ui mini form'>
         <AlbumForm  album={album} onChange={onChange}/> 
-        <button onClick={onSubmit}>Create Album</button> 
-        <button onClick={onCancel}>Cancel</button>                
+        <button className='ui primary button' onClick={onSubmit}>Create Album</button> 
+        <button className='ui button' onClick={onCancel}>Cancel</button>     
+        </form>
+                  
         </div>)             
 }
 

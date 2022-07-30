@@ -43,10 +43,12 @@ router.post('/comments', async (req, res )=> {
 
 // Edit comment
 router.post('/comments/:id', async (req, res)=> {
-
-    const comment = await Comment.findOneAndUpdate({_id: req.params.id}, req.body, { new: true})
-
-    res.send(comment)
+    try {
+        const comment = await Comment.findOneAndUpdate({_id: req.params.id}, req.body, { new: true})
+        res.send(comment)
+    } catch (err) {
+        res.status(400).send(err.message)
+    }     
 })
 
 

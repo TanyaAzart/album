@@ -35,13 +35,6 @@ const UploadImages = () => {
         
         const files = fileInput.files 
 
-        // const names = []
-
-        // album.pics.forEach(pic=>
-        //     names.push(pic.name) )
-
-        // const updatedPics = []
-
         const picSet = []
 
         for (let i=0; i < files.length; i++) {
@@ -51,18 +44,11 @@ const UploadImages = () => {
             reader.addEventListener('load', ()=>{
                 
                 const pic = {
-                    // name: files[i].name,
                     name: uuidv4(),
                     title: '',
                     src: reader.result
                 }
-                
-                
-                // if(!names.includes(pic.name)){
-                //     updatedPics.push(pic)
-                // }            
 
-                // setPics(updatedPics) 
                 picSet.push(pic)   
                 setPics(picSet)           
             })
@@ -87,10 +73,12 @@ const UploadImages = () => {
     const imagePreview = (pic)=> {  
 
         const preview = document.createElement('div')
+        const div = document.createElement('div')
+        div.setAttribute('class', 'ui input')
 
         const image = document.createElement('img')
         image.setAttribute('src', pic.src)
-        image.setAttribute('width', '100px')
+        image.setAttribute('class', 'ui middle aligned small bordered image')
 
         const input = document.createElement('input')
         input.setAttribute('placeholder', 'Enter title')
@@ -98,12 +86,18 @@ const UploadImages = () => {
         input.addEventListener('change', (e)=>onAddTitle(e, pic))
 
         const removeButton = document.createElement('button')
+        removeButton.setAttribute('class', 'ui basic primary button')
         removeButton.innerHTML='Remove'
         removeButton.addEventListener('click', ()=>removePicture(pic))
 
+        const divider = document.createElement('div')
+        divider.setAttribute('class', 'ui divider')
+
         preview.appendChild(image) 
-        preview.appendChild(input) 
+        preview.appendChild(div)
+        div.appendChild(input) 
         preview.appendChild(removeButton)
+        preview.appendChild(divider)
         previews.appendChild(preview)       
 
     }
@@ -116,22 +110,20 @@ const UploadImages = () => {
 
         updatedPics.push(updatedPic)   
     
-        setPics(updatedPics.sort((pic1,pic2)=>{
-            const name1 = pic1.name
-            const name2 = pic2.name
-            if (name1 < name2) {
-                return -1;
-              }
-              else {
-                return 1;
-              }
-        }))
+        // setPics(updatedPics.sort((pic1,pic2)=>{
+        //     const name1 = pic1.name
+        //     const name2 = pic2.name
+        //     if (name1 < name2) {
+        //         return -1;
+        //       }
+        //       else {
+        //         return 1;
+        //       }
+        // }))
     }
 
     const removePicture = (pic)=> {
-
         setPics(pics.filter(item=> item.name !==pic.name))
-
     }    
 
     
@@ -142,29 +134,27 @@ const UploadImages = () => {
            setAlert({
             alert: true,
             text: 'Choose a picture!',
-            yesButton: 'OK',
-            noButton: null
+            yesButton: 'OK'
            })
         } else {  
             addPictures(id, pics)
             setAlert({
                 alert: true,
                 text:'Pictures added!',
-                yesButton:'OK',
-                noButton:null
+                yesButton:'OK'
             })
         }              
     }   
     
     const handleAlert =()=> {
         removeAlert()
-        // navigate('/admin')
+        navigate('/admin')
     }
 
     return (
-        <div>
+        <div className='ui center aligned container'>
         { alert && <Modal handleAlert={handleAlert}/>}
-        <h3>Add fotos to your album</h3>
+        <h3 className='ui blue header'>Add fotos to your album</h3>
             <input 
                 type='file'
                 style={{display: 'none'}}
@@ -172,11 +162,13 @@ const UploadImages = () => {
                 multiple
                 onChange={handleFiles}
             /> 
-            <button onClick={()=>inputRef.current.click()}>Choose Files</button>
+            <button className='ui basic primary button' onClick={()=>inputRef.current.click()}>Choose Files</button>
             <div id="previews">
             </div> 
-            <button onClick={onAddPictures}>Add pictures</button> 
-            <button onClick={()=>navigate('/admin')}>Close</button>                    
+            { pics.length>0 &&  (<div style={{'paddingBottom': '20px'}}>
+                <button className='ui primary button' onClick={onAddPictures}>Add pictures</button> 
+                <button className='ui button' onClick={()=>navigate('/admin')}>Cancel</button>
+            </div>)}                   
         </div>
     )
 }

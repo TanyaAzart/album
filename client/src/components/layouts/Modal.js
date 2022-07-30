@@ -22,8 +22,8 @@ const Modal = ({ handleAlert })  => {
                 <div className='header'>{header}</div>
                 <div className='content'>{text}</div>
                 <div className='actions'>
-                <button className='ui primary button' onClick={handleAlert}>{yesButton}</button>
-                {noButton && <button className='ui button' onClick={()=> removeAlert()}>{noButton}</button>}
+                {yesButton && <button className='ui primary button' onClick={handleAlert}>{yesButton}</button>}
+                {noButton && <button className='ui secondary button' onClick={()=> removeAlert()}>{noButton}</button>}
 
                 </div>
             </div>

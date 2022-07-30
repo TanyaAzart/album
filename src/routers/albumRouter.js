@@ -37,9 +37,13 @@ router.post('/albums', async (req, res )=> {
 // Edit album
 router.post('/albums/:id', async (req, res)=> {
 
-    const album = await Album.findOneAndUpdate({_id: req.params.id}, req.body, { new: true})
+    try {
+        const album = await Album.findOneAndUpdate({_id: req.params.id}, req.body, { new: true})
 
-    res.send(album)
+        res.send(album)
+    } catch (err) {
+        res.status(400).send(err.message)
+    }    
 })
 
 // Upload images
@@ -87,7 +91,7 @@ router.post('/upload', async (req,res)=> {
         res.send(updatedAlbum)
 
     } catch (err) {
-        console.log(err)
+        res.status(400).send(err.message)
     }    
 })
 
@@ -104,11 +108,19 @@ router.post('/upload/delete', async (req,res)=> {
             await fs.unlink(pathToFile)   
             
             await Comment.deleteMany({album: albumId, pic: picId})
-    
-            res.send()
+
+            const album = await Album.findOne({_id: albumId})
+
+            const updatedPics = album.pics.filter(pic=>pic.name !==picName)
+
+            album.pics = updatedPics
+
+            await album.save()
+
+            res.send(album)
     
         } catch (err) {
-            console.log(err)
+            res.status(400).send(err.message)
         } 
 })
     
