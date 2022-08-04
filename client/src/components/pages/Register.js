@@ -82,17 +82,17 @@ const Register = () => {
    return (<div className='ui center aligned container'>
       {alert && <Modal handleAlert ={()=>removeAlert()}/>}
       {user ? (<div>
-         <h2>Add Avatar to Your Account!</h2>
+         <h2 className='ui blue header'>Add Avatar to Your Account!</h2>
          <input 
             type="file" 
             style={{display: 'none'}}
             ref={inputRef}
             onChange={chooseAvatar} 
          />
-         <button onClick={()=>inputRef.current.click()}>Choose File</button>
-         <button onClick={onUploadAvatar}>Upload</button> 
-         <h3>Would you like to delete your account?</h3>
-         <button onClick={onDeleteUser}>Delete Account</button>
+         <button className='ui button' onClick={()=>inputRef.current.click()}>Choose File</button>
+         <button className='ui button' onClick={onUploadAvatar}>Upload</button> 
+         <h3 className='ui blue header'>Would you like to delete your account?</h3>
+         <button className='ui button' onClick={onDeleteUser}>Delete Account</button>
          </div>) : (<div>
          <h2 className='ui blue header'>Would you like to register?</h2>
          <form className='ui mini form' onSubmit ={onSubmit}>

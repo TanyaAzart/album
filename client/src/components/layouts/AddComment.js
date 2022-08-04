@@ -15,8 +15,6 @@ const AddComment = ({ albumId, picId }) => {
   const alertContext = useContext(AlertContext)
   const { alert, setAlert, removeAlert  } = alertContext
 
-  // const navigate = useNavigate()
-
   const [ text, setText ] = useState('')
 
   const onChange = (e) => {
@@ -50,10 +48,13 @@ const AddComment = ({ albumId, picId }) => {
 
   return (
     <div>
-    { alert && <Modal handleAlert={handleAlert}/>}
-    <span>{user.name}</span>
-    <input type='text' placeholder='Enter comment' onChange={onChange} value={text}/>
-    <button onClick ={onAddComment} >Add comment</button>
+      { alert && <Modal handleAlert={handleAlert}/>}
+        <div className="ui reply form">
+          <div className="field">
+            <input type='text' placeholder='Enter comment' onChange={onChange} value={text}/>
+          </div>    
+            <button className="ui primary submit button" onClick ={onAddComment} >Add comment</button>
+        </div>   
     </div>
   )
 }

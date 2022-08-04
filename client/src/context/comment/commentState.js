@@ -6,7 +6,6 @@ import CommentReducer from './commentReducer'
 import {
     ADD_COMMENT,
     DELETE_COMMENT,
-    EDIT_COMMENT,
     GET_COMMENTS
 } from '../types'
 
@@ -50,21 +49,21 @@ const CommentState = (props)=> {
         }
     }
 
-    const editComment = async (data)=> {
-        try {
+    // const editComment = async (data)=> {
+    //     try {
 
-            const res = await axios.post(`http://localhost:4000/comments/${data._id}`, data)        
+    //         const res = await axios.post(`http://localhost:4000/comments/${data._id}`, data)        
             
-            dispatch({
-                type: EDIT_COMMENT,
-                payload: res.data
-            })
+    //         dispatch({
+    //             type: EDIT_COMMENT,
+    //             payload: res.data
+    //         })
 
 
-        } catch(err) {
-            console.log(err)
-        }
-    }
+    //     } catch(err) {
+    //         console.log(err)
+    //     }
+    // }
 
     const deleteComment = async (id) => {
         try {
@@ -87,7 +86,6 @@ const CommentState = (props)=> {
             comments: state.comments,
             addComment,
             deleteComment,
-            editComment,
             getComments
         }}
         >

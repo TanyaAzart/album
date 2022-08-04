@@ -4,6 +4,7 @@ import Modal from '../layouts/Modal'
 import AlbumContext from '../../context/album/albumContext'
 import UserContext from '../../context/user/userContext'
 import AlertContext from '../../context/alert/alertContext'
+import { LOAD_USER } from '../../context/types'
 
 const AdminPage = () => {
     const userContext = useContext(UserContext)
@@ -22,8 +23,7 @@ const AdminPage = () => {
         if (!(user && user.name === 'admin')) {
             navigate('/')
         }
-        getAlbums()
-        
+        getAlbums()        
     },[])
 
     const onEditClick =(id)=>{        

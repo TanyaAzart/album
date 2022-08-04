@@ -129,6 +129,7 @@ const AlbumState = (props) => {
             albums: state.albums,
             current: state.current,
             getAlbums,
+            setCurrent,
             addAlbum,
             deleteAlbum,
             editAlbum,

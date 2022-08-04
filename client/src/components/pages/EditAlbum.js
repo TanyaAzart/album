@@ -88,9 +88,14 @@ const EditAlbum = ()=> {
         })   
     }
 
+    const handleAlert =()=> {
+        removeAlert()
+        navigate('/admin')
+    }
+
     return (
         <div className='ui center aligned container'>
-        { alert && <Modal handleAlert={removeAlert}/>}
+        { alert && <Modal handleAlert={handleAlert}/>}
             <h3>Edit Album</h3>
             <form className='ui mini form'>
             <AlbumForm  album={album} onChange={onChange}/>             

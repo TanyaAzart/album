@@ -28,11 +28,11 @@ const Home = () => {
     return (<div className='ui center aligned container'>
             <h2 className='ui blue header'>You can see the following albums:</h2>
             {albums.map( album =>(
-                album.pics.length>0 && <p key={album._id}>
+                album.pics.length>0 && <h3 key={album._id}>
                 <Link to={`/album/${album._id}`}>
                 {album.title}, {album.year}
                 </Link>
-                </p>          
+                </h3>          
             ))
             }
         </div>)
