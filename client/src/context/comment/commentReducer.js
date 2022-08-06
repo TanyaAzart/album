@@ -1,8 +1,6 @@
-import { STATES } from 'mongoose'
 import {
     ADD_COMMENT,
     DELETE_COMMENT,
-    EDIT_COMMENT,
     GET_COMMENTS,
     DELETE_COMMENTS
 } from '../types'
@@ -28,11 +26,6 @@ const commentReducer = (state, action)=>{
             return {
                 ...state,
                 comments: state.comments.filter(comment => comment._id!==action.payload._id)
-            }
-        case EDIT_COMMENT:
-            return {
-                ...state,
-                comments: state.comments.filter(comment => comment._id!==action.payload._id).concat(action.payload)
             }
         default:
                 return state

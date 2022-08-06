@@ -4,7 +4,7 @@ import Modal from '../layouts/Modal'
 import AlbumContext from '../../context/album/albumContext'
 import UserContext from '../../context/user/userContext'
 import AlertContext from '../../context/alert/alertContext'
-import { LOAD_USER } from '../../context/types'
+
 
 const AdminPage = () => {
     const userContext = useContext(UserContext)
@@ -45,7 +45,6 @@ const AdminPage = () => {
         deleteAlbum(id)
         setId(null)
         removeAlert()
-        // navigate('/')
     }
 
     return (
@@ -67,8 +66,7 @@ const AdminPage = () => {
                 </li>  
                 </div>                          
             ))} 
-            </ul>
-            
+            </ul>            
         </div>
     )
 }

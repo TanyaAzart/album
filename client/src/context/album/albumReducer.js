@@ -3,17 +3,11 @@ import {
     ADD_ALBUM,
     DELETE_ALBUM,
     EDIT_ALBUM,
-    ADD_PICTURES,
-    SET_CURRENT
+    ADD_PICTURES
 } from '../types'
 
 const albumReducer = (state, action)=>{
     switch (action.type){
-        case SET_CURRENT:
-            return {
-                ...state,
-                current: action.payload
-            }
         case GET_ALBUMS:
             return {
                 ...state,

@@ -1,7 +1,6 @@
 const express = require('express')
 const Album = require('../models/album')
 const Comment = require('../models/comment')
-const auth = require ('../middleware/auth')
 const path = require('node:path')
 const fs = require('node:fs/promises')
 

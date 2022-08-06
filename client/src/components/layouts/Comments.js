@@ -23,7 +23,7 @@ const Comments = ({ picComments }) => {
                     </div>
                         <div className='text'>{comment.text}                
                             { (user._id === comment.owner || user.name === 'admin') &&
-                                (<button style={{'marginLeft':'10px'}} clasName='ui secondary basic button' onClick={()=> deleteComment(comment._id)}>Delete</button>)
+                                (<button style={{'marginLeft':'10px'}} className='ui secondary basic button' onClick={()=> deleteComment(comment._id)}>Delete</button>)
                             }
                         </div>
                 </div>              

@@ -26,11 +26,17 @@ const EditAlbum = ()=> {
     })  
 
     useEffect(()=> {
-       setAlbum(albums.find(album=> album._id === id))
+        if(!albums){
+            navigate('/')
+        } else {
+            setAlbum(albums.find(album=> album._id === id))
+        }      
     },[])
 
     useEffect(()=> {
-       
+        if(!album){
+            navigate('/')
+        }
      },[album])
 
     const onChange = (e)=> {  
@@ -93,14 +99,14 @@ const EditAlbum = ()=> {
         navigate('/admin')
     }
 
-    return (
+    return ( album? (
         <div className='ui center aligned container'>
         { alert && <Modal handleAlert={handleAlert}/>}
             <h3>Edit Album</h3>
             <form className='ui mini form'>
             <AlbumForm  album={album} onChange={onChange}/>             
             </form> 
-            {album.pics.length===0 && <h3>Add pictures to the album!</h3>}           
+            {album.pics && album.pics.length===0 && <h3>Add pictures to the album!</h3>}           
             {album.pics.length>0 && <h3>List of fotos in the album:</h3>}
             
                 <div className='ui horizontal list'>
@@ -124,7 +130,7 @@ const EditAlbum = ()=> {
             <button className='ui basic primary button' onClick={onAddPictures}>Add pictures</button>  
             </div>
                         
-     </div>)
+     </div>) : (<div className='ui active centered inline loader'>Loading</div>))
 }
 
 export default EditAlbum

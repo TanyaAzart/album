@@ -44,7 +44,7 @@ const Login = () => {
     return (<div className='ui center aligned container'>
         { alert && <Modal handleAlert={()=>removeAlert()}/>}
         {!user ? (<div>
-        <h2 className='ui blue header'>Would you like to login?</h2>
+        <h2 className='ui header'>Would you like to login?</h2>
         <form className='ui mini form' onSubmit={onLogin}>
             <div className='two fields'>
             <div className='field'>
@@ -62,7 +62,7 @@ const Login = () => {
         <h3><Link to='/register'>Register here!</Link></h3>
 
         </div>) : (<div>
-            <h2 className='ui blue header'>Would you like to logout?</h2>       
+            <h2 className='ui header'>Would you like to logout?</h2>       
             <button className='ui  button' onClick={logoutUser}>Logout</button>       
         </div>)}
         </div>)         

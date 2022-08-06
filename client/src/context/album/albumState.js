@@ -8,15 +8,13 @@ import {
     ADD_ALBUM,
     DELETE_ALBUM,
     EDIT_ALBUM,
-    SET_CURRENT,
     ADD_PICTURES
 } from '../types'
 
 const AlbumState = (props) => {
 
     const [state, dispatch] = useReducer(AlbumReducer, {
-        albums: [],
-        current: null
+        albums: []
     })  
 
     const config = {
@@ -67,11 +65,9 @@ const AlbumState = (props) => {
             type: ADD_PICTURES,
             payload: res.data
         })
-
         } catch (err) {
             console.log(err)
-        }
-        
+        }        
     }
 
     const deletePicture = async (id, pic) => {
@@ -116,20 +112,18 @@ const AlbumState = (props) => {
         }        
     }
 
-    const setCurrent = (id)=> {
-        dispatch({
-            type: SET_CURRENT,
-            payload: id
-        })
-    }
+    // const setCurrent = (id)=> {
+    //     dispatch({
+    //         type: SET_CURRENT,
+    //         payload: id
+    //     })
+    // }
 
     return (
         <AlbumContext.Provider
         value={{
             albums: state.albums,
-            current: state.current,
             getAlbums,
-            setCurrent,
             addAlbum,
             deleteAlbum,
             editAlbum,

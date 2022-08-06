@@ -7,7 +7,7 @@ import AlbumContext from '../../context/album/albumContext'
 
 const Home = () => {
     const userContext = useContext(UserContext)
-    const { user, loadUser, getUsers } = userContext
+    const { loadUser, getUsers } = userContext
 
     const albumContext = useContext(AlbumContext)
     const { albums, getAlbums } = albumContext  
@@ -25,8 +25,8 @@ const Home = () => {
         }         
     }, [])
 
-    return (<div className='ui center aligned container'>
-            <h2 className='ui blue header'>You can see the following albums:</h2>
+    return (albums.length ? (<div className='ui justified container'>
+            <h2 className='ui header'>You can see the following albums:</h2>
             {albums.map( album =>(
                 album.pics.length>0 && <h3 key={album._id}>
                 <Link to={`/album/${album._id}`}>
@@ -35,7 +35,7 @@ const Home = () => {
                 </h3>          
             ))
             }
-        </div>)
+        </div>) : (<div className='ui active centered inline loader'>Loading</div>))
 }
 
 export default Home

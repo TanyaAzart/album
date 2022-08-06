@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import Modal from '../layouts/Modal'
 import UserContext from '../../context/user/userContext'
 import AlertContext from '../../context/alert/alertContext'
-import { set } from 'mongoose'
 
 
 const Register = () => {   
@@ -94,7 +93,7 @@ const Register = () => {
          <h3 className='ui blue header'>Would you like to delete your account?</h3>
          <button className='ui button' onClick={onDeleteUser}>Delete Account</button>
          </div>) : (<div>
-         <h2 className='ui blue header'>Would you like to register?</h2>
+         <h2 className='ui header'>Would you like to register?</h2>
          <form className='ui mini form' onSubmit ={onSubmit}>
          <div className='three fields'>
             <div className='field'>

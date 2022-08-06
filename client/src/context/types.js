@@ -2,7 +2,6 @@ export const GET_ALBUMS ='GET_ALBUMS'
 export const ADD_ALBUM ='ADD_ALBUM'
 export const EDIT_ALBUM ='EDIT_ALBUM'
 export const DELETE_ALBUM ='DELETE_ALBUM'
-export const SET_CURRENT ='SET_CURRENT'
 export const ADD_PICTURES ='GET_PICTURES'
 export const DELETE_PICTURE ='DELETE_PICTURE'
 
@@ -16,7 +15,6 @@ export const LOGOUT_USER = 'LOGOUT_USER'
 
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
-export const EDIT_COMMENT = 'EDIT_COMMENT'
 export const GET_COMMENTS = 'GET_COMMENTS'
 export const DELETE_COMMENTS = 'DELETE_COMMENTS'
 
