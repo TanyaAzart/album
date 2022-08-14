@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import Avatar from './yoshi.png'
 import CommentContext from '../../context/comment/commentContext'
 import UserContext from '../../context/user/userContext'
 
@@ -14,7 +15,9 @@ const Comments = ({ picComments }) => {
     return (<div className='ui container justified'>
         { picComments.map(comment => (<div key ={comment._id} className='comment' >
             <span className='avatar'>
-                <img src={`data:image/png;base64, ${users.find(user=> user._id ===comment.owner).avatar}`}/>
+          {users.find(user=> user._id ===comment.owner).avatar ? (<img src={`data:image/png;base64, ${users.find(user=> user._id ===comment.owner).avatar}`} />
+          ) : <img src={Avatar}/>}
+               
                 </span>
                 <div className='content'>
                     <span className='autor'>{users.find(user=> user._id === comment.owner).name}</span>

@@ -2,7 +2,8 @@ export const GET_ALBUMS ='GET_ALBUMS'
 export const ADD_ALBUM ='ADD_ALBUM'
 export const EDIT_ALBUM ='EDIT_ALBUM'
 export const DELETE_ALBUM ='DELETE_ALBUM'
-export const ADD_PICTURES ='GET_PICTURES'
+export const ADD_PICTURES ='ADD_PICTURES'
+export const GET_PICTURE ='GET_PICTURE'
 export const DELETE_PICTURE ='DELETE_PICTURE'
 
 

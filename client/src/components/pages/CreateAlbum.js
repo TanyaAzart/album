@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import AlbumContext from '../../context/album/albumContext'
 import AlbumForm from '../layouts/AlbumForm'
@@ -9,7 +9,7 @@ import Modal from '../layouts/Modal'
 const CreateAlbum = () => {
 
     const albumContext = useContext(AlbumContext)
-    const { addAlbum, current } = albumContext 
+    const { addAlbum } = albumContext 
     
     const alertContext = useContext(AlertContext)
     const { alert, setAlert, removeAlert  } = alertContext
@@ -19,7 +19,8 @@ const CreateAlbum = () => {
     const [ album, setAlbum ] = useState({
         title: '',
         year: '',
-        descr: ''
+        descr: '',
+        id: null
     })  
 
     // useEffect(()=> {
@@ -41,7 +42,7 @@ const CreateAlbum = () => {
         
         const res = await addAlbum(album)
 
-        if (res && res.indexOf('failed')!==-1){
+        if (typeof res==='string' && res.indexOf('failed')!==-1){
             setAlert({
                 alert: true,
                 header: 'CREATE FAILED',
@@ -50,6 +51,10 @@ const CreateAlbum = () => {
                 noButton:'OK'
             })
         } else {
+            setAlbum({
+                ...album,
+                id: res._id
+            })
             setAlert({
                 alert: true,
                 header: 'SUCCESS',
@@ -63,7 +68,7 @@ const CreateAlbum = () => {
 
     const handleAlert =()=> {
         removeAlert()
-        navigate(`/admin/album/upload/${current}`)
+        navigate(`/admin/album/upload/${album.id}`)
     }
 
     const onCancel = ()=> {

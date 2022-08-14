@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+
 import Comments from '../layouts/Comments'
 import AddComment from '../layouts/AddComment'
 import AlbumContext from '../../context/album/albumContext'
@@ -11,7 +12,7 @@ const Album = () => {
     const navigate = useNavigate()
 
     const albumContext = useContext(AlbumContext)
-    const { albums } = albumContext  
+    const { albums, src, getPicture } = albumContext  
 
     const commentContext = useContext(CommentContext)
     const { getComments, comments } = commentContext   
@@ -21,7 +22,7 @@ const Album = () => {
     const album = albums.filter(item => item._id === id)[0]  
     
     const [ index, setIndex ] = useState(0)  
-
+    
     useEffect(()=> { 
         if(!album){
             navigate('/')
@@ -29,9 +30,16 @@ const Album = () => {
             getComments(id)
         }       
     },[])    
-     
 
-    const src = !album ? '' : `/images/${id}/${album.pics[index].name}`
+    useEffect(()=> {
+        if (album) {
+            getPicture(album.pics[index].name)
+        }        
+    },[index])
+
+
+
+    // const src = !album ? '' : `/images/${id}/${album.pics[index].name}`
 
     const pic = !album ? {} : album.pics[index]
 

@@ -13,11 +13,6 @@ const CommentState = (props)=> {
     const [ state, dispatch] = useReducer(CommentReducer, {
         comments: []
     })
-    
-    const config = {
-        headers: {
-            'Content-Type': 'application/json'
-        }}
 
     const getComments = async (id)=> {
         

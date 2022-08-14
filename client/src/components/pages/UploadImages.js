@@ -3,12 +3,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 import AlbumContext from '../../context/album/albumContext'
 import AlertContext from '../../context/alert/alertContext'
 import Modal from '../layouts/Modal'
-import { v4 as uuidv4 } from 'uuid'
+import { nanoid } from 'nanoid'
 
 const UploadImages = () => {
 
     const albumContext = useContext(AlbumContext)
-    const { albums, addPictures } = albumContext
+    const { addPictures } = albumContext
 
     const alertContext = useContext(AlertContext)
     const { alert, setAlert, removeAlert } = alertContext
@@ -17,8 +17,6 @@ const UploadImages = () => {
     const { id } = useParams()
     const inputRef = useRef(null)
 
-    const album = albums.find(album=> album._id=== id)
-
     const [ pics, setPics ] = useState([] )
 
     const previews = document.getElementById('previews')    
@@ -26,7 +24,7 @@ const UploadImages = () => {
     
     useEffect(()=>{
         showPreviews()
-    },[pics])     
+    })     
 
 
     const handleFiles = ()=> {
@@ -44,7 +42,7 @@ const UploadImages = () => {
             reader.addEventListener('load', ()=>{
                 
                 const pic = {
-                    name: uuidv4(),
+                    name: nanoid(),
                     title: '',
                     src: reader.result
                 }
@@ -109,17 +107,6 @@ const UploadImages = () => {
         updatedPic.title = e.target.value
 
         updatedPics.push(updatedPic)   
-    
-        // setPics(updatedPics.sort((pic1,pic2)=>{
-        //     const name1 = pic1.name
-        //     const name2 = pic2.name
-        //     if (name1 < name2) {
-        //         return -1;
-        //       }
-        //       else {
-        //         return 1;
-        //       }
-        // }))
     }
 
     const removePicture = (pic)=> {
@@ -137,7 +124,9 @@ const UploadImages = () => {
             yesButton: 'OK'
            })
         } else {  
+                        
             addPictures(id, pics)
+            
             setAlert({
                 alert: true,
                 text:'Pictures added!',

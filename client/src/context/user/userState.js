@@ -1,4 +1,4 @@
-import React, { useReducer, useContext } from 'react'
+import React, { useReducer } from 'react'
 import axios from 'axios'
 import UserContext from './userContext'
 import UserReducer from './userReducer'
@@ -80,7 +80,7 @@ const UserState = (props)=> {
             
             fd.append('avatar', file, file.name)
             
-            const res = await axios.post('http://localhost:4000/users/avatar', fd)
+            await axios.post('http://localhost:4000/users/avatar', fd)
            
         } catch (err) {
             console.log(err)

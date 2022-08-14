@@ -51,8 +51,13 @@ const Register = () => {
 
    const chooseAvatar = (e)=> {
       const file = e.target.files[0]
-      
       setAvatar(file)
+      setAlert({
+         alert: true,
+         header: 'WARNING',
+         text: `File to be uploaded: ${file.name}`,
+         yesButton: 'OK'
+      })
    }
 
    const inputRef = useRef(null)

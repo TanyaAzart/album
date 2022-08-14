@@ -8,13 +8,15 @@ import {
     ADD_ALBUM,
     DELETE_ALBUM,
     EDIT_ALBUM,
-    ADD_PICTURES
+    ADD_PICTURES,
+    GET_PICTURE
 } from '../types'
 
 const AlbumState = (props) => {
 
     const [state, dispatch] = useReducer(AlbumReducer, {
-        albums: []
+        albums: [],
+        src:''
     })  
 
     const config = {
@@ -36,6 +38,20 @@ const AlbumState = (props) => {
         }
     }
 
+    const getPicture = async (name)=> {
+        try {
+            const res = await axios.get(`http://localhost:4000/albums/${name}`)
+
+            dispatch({
+                type: GET_PICTURE,
+                payload: res.data
+            })
+
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     const addAlbum = async (album)=> {
         
         try {
@@ -47,6 +63,7 @@ const AlbumState = (props) => {
                     type: ADD_ALBUM,
                     payload: res.data
                 }) 
+                return res.data
 
             } else {
                 alert("The album already exists!")
@@ -112,22 +129,17 @@ const AlbumState = (props) => {
         }        
     }
 
-    // const setCurrent = (id)=> {
-    //     dispatch({
-    //         type: SET_CURRENT,
-    //         payload: id
-    //     })
-    // }
-
     return (
         <AlbumContext.Provider
         value={{
             albums: state.albums,
+            src: state.src,
             getAlbums,
             addAlbum,
             deleteAlbum,
             editAlbum,
             addPictures,
+            getPicture,
             deletePicture
         }}
         >

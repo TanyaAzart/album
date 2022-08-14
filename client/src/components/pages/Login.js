@@ -19,7 +19,7 @@ const Login = () => {
         if(token) {
             loadUser()            
         }
-    },[])
+    })
 
     const onLogin = async (e)=> {       
             e.preventDefault()

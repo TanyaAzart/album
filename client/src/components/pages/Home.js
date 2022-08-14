@@ -23,7 +23,7 @@ const Home = () => {
         } else {
             navigate('/login')
         }         
-    }, [])
+    })
 
     return (albums.length ? (<div className='ui justified container'>
             <h2 className='ui header'>You can see the following albums:</h2>
