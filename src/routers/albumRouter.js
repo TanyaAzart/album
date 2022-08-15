@@ -1,12 +1,11 @@
 const express = require('express')
 require('dotenv').config();
 const cloudinary = require('cloudinary').v2;
-
 const Album = require('../models/album')
 const Comment = require('../models/comment')
 
-const path = require('node:path')
-const fs = require('node:fs/promises')
+// const path = require('node:path')
+// const fs = require('node:fs/promises')
 
 const router = new express.Router()
 

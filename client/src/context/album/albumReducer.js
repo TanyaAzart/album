@@ -4,7 +4,8 @@ import {
     DELETE_ALBUM,
     EDIT_ALBUM,
     ADD_PICTURES,
-    GET_PICTURE
+    GET_PICTURE,
+    SET_LOADING
 } from '../types'
 
 const albumReducer = (state, action)=>{
@@ -38,6 +39,11 @@ const albumReducer = (state, action)=>{
             return {
                 ...state,
                 src: action.payload
+            }
+        case SET_LOADING:
+            return {
+                ...state,
+                loading: action.payload
             }
         default:
                 return state

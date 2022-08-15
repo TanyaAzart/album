@@ -5,6 +5,7 @@ export const DELETE_ALBUM ='DELETE_ALBUM'
 export const ADD_PICTURES ='ADD_PICTURES'
 export const GET_PICTURE ='GET_PICTURE'
 export const DELETE_PICTURE ='DELETE_PICTURE'
+export const SET_LOADING = 'SET_LOADING'
 
 
 export const GET_USERS = 'GET_USERS'

@@ -9,7 +9,7 @@ const userRouter = require('./routers/userRouter')
 const commentRouter = require('./routers/commentRouter')
 
 const server = express()
-const port = process.env.PORT || 4000
+const port = process.env.PORT 
 
 const corsOptions ={
     credentials: true

@@ -1,9 +1,9 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const Comment = require('../models/comment')
-const auth = require ('../middleware/auth')
-const path = require('node:path')
-const fs = require('node:fs/promises')
+// const auth = require ('../middleware/auth')
+// const path = require('node:path')
+// const fs = require('node:fs/promises')
 
 const router = new express.Router()
 

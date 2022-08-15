@@ -12,7 +12,7 @@ const AdminPage = () => {
     const alertContext = useContext(AlertContext)
     
     const { user } = userContext
-    const { albums, getAlbums, deleteAlbum } = albumContext    
+    const { albums, getAlbums, deleteAlbum, loading } = albumContext    
     const { alert, setAlert, removeAlert } = alertContext
 
     const navigate = useNavigate()
@@ -47,7 +47,7 @@ const AdminPage = () => {
         removeAlert()
     }
 
-    return (
+    return (loading? (<div className='ui active centered inline loader'>Loading</div>): (
         <div className='ui center aligned container'>
         {alert && (<Modal  
                     handleAlert={handleDelete}
@@ -67,7 +67,7 @@ const AdminPage = () => {
                 </div>                          
             ))} 
             </ul>            
-        </div>
+        </div>)
     )
 }
 

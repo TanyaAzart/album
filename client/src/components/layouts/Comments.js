@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import Avatar from './yoshi.png'
+import Avatar from './avatar.png'
 import CommentContext from '../../context/comment/commentContext'
 import UserContext from '../../context/user/userContext'
 

@@ -9,14 +9,16 @@ import {
     DELETE_ALBUM,
     EDIT_ALBUM,
     ADD_PICTURES,
-    GET_PICTURE
+    GET_PICTURE,
+    SET_LOADING
 } from '../types'
 
 const AlbumState = (props) => {
 
     const [state, dispatch] = useReducer(AlbumReducer, {
         albums: [],
-        src:''
+        src:'',
+        loading: false
     })  
 
     const config = {
@@ -26,11 +28,20 @@ const AlbumState = (props) => {
 
     const getAlbums = async ()=> {
         try {
+            dispatch({
+                type: SET_LOADING,
+                payload: true
+            })
             const res = await axios.get('http://localhost:4000/albums')
     
             dispatch({
                 type: GET_ALBUMS,
                 payload: res.data
+            })
+
+            dispatch({
+                type: SET_LOADING,
+                payload: false
             })
 
         } catch(err) {
@@ -40,11 +51,21 @@ const AlbumState = (props) => {
 
     const getPicture = async (name)=> {
         try {
+            dispatch({
+                type: SET_LOADING,
+                payload: true
+            })            
+
             const res = await axios.get(`http://localhost:4000/albums/${name}`)
 
             dispatch({
                 type: GET_PICTURE,
                 payload: res.data
+            })
+
+            dispatch({
+                type: SET_LOADING,
+                payload: false
             })
 
         } catch (err) {
@@ -116,6 +137,11 @@ const AlbumState = (props) => {
     
     const deleteAlbum = async (id)=>{
        try {
+            dispatch({
+                type: SET_LOADING,
+                payload: true
+            })
+
             await axios.post(`http://localhost:4000/albums/delete/${id}`)
             
             dispatch({
@@ -123,6 +149,10 @@ const AlbumState = (props) => {
                 payload: id
             }) 
 
+            dispatch({
+                type: SET_LOADING,
+                payload: false
+            })
             
             } catch (err) {
             console.log(err)
@@ -134,6 +164,7 @@ const AlbumState = (props) => {
         value={{
             albums: state.albums,
             src: state.src,
+            loading: state.loading,
             getAlbums,
             addAlbum,
             deleteAlbum,

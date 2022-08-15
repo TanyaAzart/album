@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-
 import Comments from '../layouts/Comments'
 import AddComment from '../layouts/AddComment'
 import AlbumContext from '../../context/album/albumContext'
@@ -12,7 +11,7 @@ const Album = () => {
     const navigate = useNavigate()
 
     const albumContext = useContext(AlbumContext)
-    const { albums, src, getPicture } = albumContext  
+    const { albums, src, getPicture, loading } = albumContext  
 
     const commentContext = useContext(CommentContext)
     const { getComments, comments } = commentContext   
@@ -27,25 +26,14 @@ const Album = () => {
         if(!album){
             navigate('/')
         } else {
+            getPicture(album.pics[index].name)
             getComments(id)
         }       
-    },[])    
-
-    useEffect(()=> {
-        if (album) {
-            getPicture(album.pics[index].name)
-        }        
-    },[index])
-
-
-
-    // const src = !album ? '' : `/images/${id}/${album.pics[index].name}`
+    },[index])  
 
     const pic = !album ? {} : album.pics[index]
 
-    const picComments = !album ? [] : comments.filter(comment => comment.pic === album.pics[index]._id)
-
-    
+    const picComments = !album ? [] : comments.filter(comment => comment.pic === album.pics[index]._id)    
     
     const showPrevious = ()=> {
         if (index === 0){
@@ -63,7 +51,7 @@ const Album = () => {
         }
     }
 
-    return (album? (
+    return (loading || !album ? (<div className='ui active centered inline loader'>Loading</div>) : (
         <div className='ui center aligned container'>
             <h2 className='ui header'>{album.title}</h2>
             <h3 className='ui header'>Year: {album.year}</h3>
@@ -80,7 +68,7 @@ const Album = () => {
                     {picComments && <Comments picComments={picComments}/>}
                 </div>                    
             <AddComment albumId ={id} picId={pic._id}/>           
-        </div>) : (<div className='ui active centered inline loader'>Loading</div>)
+        </div>)
     )
 }
 
