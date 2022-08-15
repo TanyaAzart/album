@@ -14,6 +14,8 @@ import {
 } from '../types'
 
 const UserState = (props)=> {
+
+    const API_URL = process.env.NODE_ENV === "production"  ? "https://album-tanya-azart.herokuapp.com" : "http://localhost:4000";
     
     const [state, dispatch] = useReducer(UserReducer, {
         users: [],
@@ -28,7 +30,7 @@ const UserState = (props)=> {
     const loadUser = async () => {
     
         try {
-            const res = await axios.get('http://localhost:4000/users/login')
+            const res = await axios.get(`${API_URL}/users/login`)
 
             dispatch({
                 type: LOAD_USER,
@@ -42,7 +44,7 @@ const UserState = (props)=> {
 
     const getUsers = async ()=> {
         try {
-            const res = await axios.get('http://localhost:4000/users')
+            const res = await axios.get(`${API_URL}/users`)
 
             dispatch({
                 type: GET_USERS,
@@ -57,7 +59,7 @@ const UserState = (props)=> {
     const addUser =  async (data) => {
         
         try {
-            const res = await axios.post('http://localhost:4000/users', data, config)
+            const res = await axios.post(`${API_URL}/users`, data, config)
             
             localStorage.setItem('token', res.data.token)   
             
@@ -80,7 +82,7 @@ const UserState = (props)=> {
             
             fd.append('avatar', file, file.name)
             
-            await axios.post('http://localhost:4000/users/avatar', fd)
+            await axios.post(`${API_URL}/users/avatar`, fd)
            
         } catch (err) {
             console.log(err)
@@ -90,7 +92,7 @@ const UserState = (props)=> {
 
     const deleteUser = async () => {
         try {
-            const res = await axios.post('http://localhost:4000/users/delete')
+            const res = await axios.post(`${API_URL}/users/delete`)
 
             dispatch({
                 type: DELETE_USER,
@@ -108,7 +110,7 @@ const UserState = (props)=> {
     const loginUser = async (data) => {
         
         try {
-            const res = await axios.post('http://localhost:4000/users/login', data)
+            const res = await axios.post(`${API_URL}/users/login`, data)
             
             localStorage.setItem('token', res.data.token)   
             
@@ -127,7 +129,7 @@ const UserState = (props)=> {
     const logoutUser = async () => {
         
         try {
-            await axios.post('http://localhost:4000/users/logout')
+            await axios.post(`${API_URL}/users/logout`)
             localStorage.setItem('token', '')   
             setAuthToken()   
             

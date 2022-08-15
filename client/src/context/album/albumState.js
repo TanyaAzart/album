@@ -15,6 +15,8 @@ import {
 
 const AlbumState = (props) => {
 
+    const API_URL = process.env.NODE_ENV === "production"  ? "https://album-tanya-azart.herokuapp.com" : "http://localhost:4000";
+
     const [state, dispatch] = useReducer(AlbumReducer, {
         albums: [],
         src:'',
@@ -32,7 +34,7 @@ const AlbumState = (props) => {
                 type: SET_LOADING,
                 payload: true
             })
-            const res = await axios.get('http://localhost:4000/albums')
+            const res = await axios.get(`${API_URL}/albums`)
     
             dispatch({
                 type: GET_ALBUMS,
@@ -56,7 +58,7 @@ const AlbumState = (props) => {
                 payload: true
             })            
 
-            const res = await axios.get(`http://localhost:4000/albums/${name}`)
+            const res = await axios.get(`${API_URL}/albums/${name}`)
 
             dispatch({
                 type: GET_PICTURE,
@@ -78,7 +80,7 @@ const AlbumState = (props) => {
         try {
             if(!state.albums.find(item => item.title ===album.title)) {                
                 
-                const res = await axios.post('http://localhost:4000/albums', album, config)
+                const res = await axios.post(`${API_URL}/albums`, album, config)
                 
                 dispatch({
                     type: ADD_ALBUM,
@@ -97,7 +99,7 @@ const AlbumState = (props) => {
     const addPictures = async (albumId, pics)=> {
 
         try {
-            const res = await axios.post('http://localhost:4000/upload', { albumId, pics })
+            const res = await axios.post(`${API_URL}/upload`, { albumId, pics })
 
             dispatch({
             type: ADD_PICTURES,
@@ -111,7 +113,7 @@ const AlbumState = (props) => {
     const deletePicture = async (id, pic) => {
         
         try {
-           await axios.post('http://localhost:4000/upload/delete',{ id, pic } )
+           await axios.post(`${API_URL}/upload/delete`,{ id, pic } )
             
         } catch (err) {
             console.log(err)
@@ -121,7 +123,7 @@ const AlbumState = (props) => {
     const editAlbum = async (data)=> {
         try {
             
-            const res = await axios.post(`http://localhost:4000/albums/${data._id}`, data)
+            const res = await axios.post(`${API_URL}/albums/${data._id}`, data)
 
             const updatedAlbums = state.albums.filter(album => album._id !== data._id).concat(res.data)
 
@@ -142,7 +144,7 @@ const AlbumState = (props) => {
                 payload: true
             })
 
-            await axios.post(`http://localhost:4000/albums/delete/${id}`)
+            await axios.post(`${API_URL}/albums/delete/${id}`)
             
             dispatch({
                 type: DELETE_ALBUM,

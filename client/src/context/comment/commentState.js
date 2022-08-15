@@ -10,6 +10,9 @@ import {
 } from '../types'
 
 const CommentState = (props)=> {
+
+    const API_URL = process.env.NODE_ENV === "production"  ? "https://album-tanya-azart.herokuapp.com" : "http://localhost:4000";
+
     const [ state, dispatch] = useReducer(CommentReducer, {
         comments: []
     })
@@ -17,7 +20,7 @@ const CommentState = (props)=> {
     const getComments = async (id)=> {
         
         try {
-            const res = await axios.get(`http://localhost:4000/comments/${id}`)
+            const res = await axios.get(`${API_URL}/comments/${id}`)
 
             dispatch({
                 type: GET_COMMENTS,
@@ -32,7 +35,7 @@ const CommentState = (props)=> {
     const addComment =  async (data) => {
         
         try {
-            const res = await axios.post('http://localhost:4000/comments', data)        
+            const res = await axios.post(`${API_URL}/comments`, data)        
             
             dispatch({
                 type: ADD_COMMENT,
@@ -44,25 +47,9 @@ const CommentState = (props)=> {
         }
     }
 
-    // const editComment = async (data)=> {
-    //     try {
-
-    //         const res = await axios.post(`http://localhost:4000/comments/${data._id}`, data)        
-            
-    //         dispatch({
-    //             type: EDIT_COMMENT,
-    //             payload: res.data
-    //         })
-
-
-    //     } catch(err) {
-    //         console.log(err)
-    //     }
-    // }
-
     const deleteComment = async (id) => {
         try {
-            const res = await axios.post(`http://localhost:4000/comments/delete/${id}`)
+            const res = await axios.post(`${API_URL}/comments/delete/${id}`)
 
             dispatch({
                 type: DELETE_COMMENT,
