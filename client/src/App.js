@@ -14,7 +14,7 @@ import UserState from './context/user/userState'
 import AlertState from './context/alert/alertState'
 import CommentState from './context/comment/commentState'
 
-// import './App.css'
+import './App.css'
 import setAuthToken from './utils/setAuthToken'
 
 
