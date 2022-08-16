@@ -6,9 +6,6 @@ const cloudinary = require('cloudinary').v2;
 const Album = require('../models/album')
 const Comment = require('../models/comment')
 
-// const path = require('node:path')
-// const fs = require('node:fs/promises')
-
 const router = new express.Router()
 
 // Get albums
@@ -73,7 +70,7 @@ router.post('/upload', async (req, res)=>{
                 folder: 'albums', 
                 public_id: pic.name,
                 tags: `${albumId}`
-            }).then(result=> console.log(result.public_id))          
+            })        
         })
     
         const updatedAlbum = await Album.findOneAndUpdate({_id: albumId}, { pics: data }, { new: true})
@@ -84,55 +81,6 @@ router.post('/upload', async (req, res)=>{
         console.log(err)
     }
 })
-
-// Upload images to the public dir on server
-// router.post('/upload', async (req,res)=> {
-    
-//     try {
-//         const albumId = req.body.albumId
-//         const pics = req.body.pics
-
-//         const albumDir = path.join(__dirname,`../../client/build/images/${albumId}` )
-        
-//         await fs.mkdir(albumDir, { recursive: true })
-
-//         const data = []       
-
-//         const album = await Album.findById(albumId)
-
-//         album.pics.forEach(pic=>{
-//             data.push({ 
-//                 name: pic.name,
-//                 title: pic.title
-//             })
-//         })    
-        
-//         pics.forEach(pic => {
-//             data.push({ 
-//                 name: pic.name,
-//                 title: pic.title
-//             })
-//         })
-            
-//         pics.forEach(async pic => {
-
-//             const srcData = pic.src.replace(/^data:image\/\w+;base64,/, "");
-
-//             const buf = Buffer.from(srcData, 'base64');
-
-//             const file = path.join(albumDir,`/${pic.name}` )
-
-//             await fs.writeFile(file, buf, (err)=> console.log(err));            
-//         })
-
-//         const updatedAlbum = await Album.findOneAndUpdate({_id: albumId}, { pics: data }, { new: true})
-
-//         res.send(updatedAlbum)
-
-//     } catch (err) {
-//         res.status(400).send(err.message)
-//     }    
-// })
 
 // Get picture
 router.get('/albums/:name', async (req, res)=> {
@@ -156,10 +104,6 @@ router.post('/upload/delete', async (req,res)=> {
             const albumId = req.body.id
             const picName = req.body.pic.name
             const picId = req.body.pic._id
-
-            // const pathToFile = path.join(__dirname, `../../client/build/images/${albumId}/${picName}`)
-        
-            // await fs.unlink(pathToFile) 
             
             cloudinary.uploader.destroy(`albums/${picName}`)  
             
@@ -184,9 +128,6 @@ router.post('/upload/delete', async (req,res)=> {
 router.post('/albums/delete/:id', async (req,res)=> {
     
     try {     
-        // const albumDir = path.join(__dirname,`../../client/build/images/${req.params.id}` )
-
-        // await fs.rm(albumDir, { force: true, recursive: true})
 
         await cloudinary.api.delete_resources_by_tag(`${req.params.id}`,
         function(error, result) {console.log(result, error); });

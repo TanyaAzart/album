@@ -1,9 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const Comment = require('../models/comment')
-// const auth = require ('../middleware/auth')
-// const path = require('node:path')
-// const fs = require('node:fs/promises')
 
 const router = new express.Router()
 
@@ -56,7 +53,7 @@ router.post('/comments/:id', async (req, res)=> {
 router.post('/comments/delete/:id', async (req,res)=> {
     
     try { 
-        const comment = await Comment.findByIdAndDelete(req.params.id)
+        const comment = await Comment.findOneAndDelete({_id: req.params.id})
         
         res.send(comment)
         
