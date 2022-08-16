@@ -88,7 +88,7 @@ router.get('/albums/:name', async (req, res)=> {
         
         const result = await cloudinary.uploader.explicit(`albums/${picName}`, {type: 'upload'})
 
-        res.send(result.url)
+        res.send(result.secure_url)
 
     } catch (err) {
         console.log(err)

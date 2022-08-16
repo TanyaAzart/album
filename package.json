@@ -8,7 +8,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client": "npm start --prefix client",
     "server": "env-cmd -f ./config/dev.env nodemon src/server.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false cd client && npm install && npm run buildheroku logs"
   },
   "keywords": [],
   "author": "Tatiana Azarchenko",
@@ -32,6 +32,7 @@
     "validator": "^13.7.0"
   },
   "engines": {
-    "node": "16.15.1"
+    "node": "16.15.1",
+    "npm": "8.11.0"
   }
 }
