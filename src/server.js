@@ -27,10 +27,10 @@ server.use(commentRouter)
 server.use(express.static('client/public'))
 
 if (process.env.NODE_ENV ==='production') {
-    server.use(express.static(path.resolve(__dirname, "./client/build")))
+    server.use(express.static(path.resolve(__dirname, "./../client/build")))
 
     server.get('*', (req, res)=>{
-        res.sendFile(path.resolve(__dirname, "./client/build", "index.html"))
+        res.sendFile(path.resolve(__dirname, "./../client/build", "index.html"))
     })
 }
 
