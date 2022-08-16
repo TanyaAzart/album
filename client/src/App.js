@@ -13,7 +13,7 @@ import AlbumState from './context/album/albumState'
 import UserState from './context/user/userState'
 import AlertState from './context/alert/alertState'
 import CommentState from './context/comment/commentState'
-import './semantic.css'
+
 // import './App.css'
 import setAuthToken from './utils/setAuthToken'
 
