@@ -5,7 +5,6 @@
   "main": "src/server.js",
   "scripts": {
     "start": "cd src && npm install && node server.js",
-    "heroku-postbuild": "cd client && npm install && npm run build",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "client": "npm start --prefix client",
     "server": "env-cmd -f ./config/dev.env nodemon src/server.js"
