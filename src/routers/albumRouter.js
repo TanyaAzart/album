@@ -1,7 +1,5 @@
 const express = require('express')
-require('dotenv').config({
-    path: '../../.env'
-});
+require('dotenv').config();
 const cloudinary = require('cloudinary').v2;
 const Album = require('../models/album')
 const Comment = require('../models/comment')
