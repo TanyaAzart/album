@@ -86,7 +86,7 @@ router.post('/users/logout', auth, async (req,res)=> {
 
 const upload = multer ({ 
     limits: {
-        fileSize: 1000000 // bites
+        fileSize: 200000 // bites
     },
     fileFilter(req, file, cb) {
         if (!file.originalname.match(/\.(jpg|jpeg|png)$/)){
@@ -95,6 +95,7 @@ const upload = multer ({
         cb(undefined, true)
     }
 })
+
 router.post("/users/avatar", auth, upload.single("avatar"), async (req, res)=> {
     
     const buffer = await sharp(req.file.buffer).resize({ width: 250, height: 250 }).png().toBuffer()

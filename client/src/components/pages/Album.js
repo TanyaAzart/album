@@ -4,6 +4,8 @@ import Comments from '../layouts/Comments'
 import AddComment from '../layouts/AddComment'
 import AlbumContext from '../../context/album/albumContext'
 import CommentContext from '../../context/comment/commentContext'
+import LeftArrow from './left-arrow.png'
+import RightArrow from './right-arrow.png'
 
 
 
@@ -50,26 +52,35 @@ const Album = () => {
             setIndex(index + 1)
         }
     }
-
+// ui center aligned container
     return (loading || !album ? (<div className='ui active centered inline loader'>Loading</div>) : (
-        <div className='ui center aligned container'>
-            <h2 className='ui header'>{album.title}</h2>
-            <h3 className='ui header'>Year: {album.year}</h3>
-                <div className='ui info message'>
-                    <p>{album.descr}</p>
+             
+                <div className='ui two column doubling stackable grid container'>
+                    <div className='column'> 
+                    <img style={{'width': '30px', 'float':'left'}} src={LeftArrow} onClick ={showPrevious}/>                  
+                    <img style={{'width': '30px', 'float':'right'}} src={RightArrow} onClick ={showNext}/>
+                    <img src={src} className='ui centered large rounded image'/>                    
                 </div>
-            <button className="ui left floated basic primary button" onClick ={showPrevious}>{"<< Previous"}</button>
-            <button className="ui right floated basic primary button" onClick ={showNext}>{" Next >>"}</button>
-                <div>           
-                    <img src={src} className='ui centered large rounded image'/>           
-                </div> 
-                <div className='ui comments'>
-                    <h3 className="ui dividing header">Comments</h3>
-                    {picComments && <Comments picComments={picComments}/>}
-                </div>                    
-            <AddComment albumId ={id} picId={pic._id}/>           
-        </div>)
+                <div className='column'>
+                    <div className='ui center aligned container'>
+                    <h2 className='ui header'>{album.title}</h2>
+                    <h3 className='ui header'>Year: {album.year}</h3>
+                        <div className='ui message'>
+                        <p>{album.descr}</p>
+                        </div>
+                    </div>                    
+                        <div className='ui comments'>
+                        <h3 className="ui dividing header">Comments</h3>
+                        {picComments && <Comments picComments={picComments}/>}
+                        </div>                    
+                        <AddComment albumId ={id} picId={pic._id}/>    
+                    </div>
+                </div>)
     )
 }
 
 export default Album
+
+
+//<button className="ui left floated basic black button" onClick ={showPrevious}>{"<< Previous"}</button>
+//<button className="ui right floated basic black button" onClick ={showNext}>{" Next >>"}</button>          
