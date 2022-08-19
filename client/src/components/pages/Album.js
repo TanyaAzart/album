@@ -63,10 +63,9 @@ const Album = () => {
                 </div>
                 <div className='column'>
                     <div className='ui center aligned container'>
-                    <h2 className='ui header'>{album.title}</h2>
-                    <h3 className='ui header'>Year: {album.year}</h3>
+                    <h2 className='ui header'>{`Album: "${album.title}"`}</h2>
                         <div className='ui message'>
-                        <p>{album.descr}</p>
+                        <p style={{'fontStyle':'italic'}}>{album.descr}</p>
                         </div>
                     </div>                    
                         <div className='ui comments'>
@@ -79,8 +78,6 @@ const Album = () => {
     )
 }
 
-export default Album
+export default Album   
 
-
-//<button className="ui left floated basic black button" onClick ={showPrevious}>{"<< Previous"}</button>
-//<button className="ui right floated basic black button" onClick ={showNext}>{" Next >>"}</button>          
+//<h3 className='ui header'>Year: {album.year}</h3>

@@ -82,10 +82,10 @@ const UserState = (props)=> {
             
             fd.append('avatar', file, file.name)
             
-            const res = await axios.post(`${API_URL}/users/avatar`, fd)
+            await axios.post(`${API_URL}/users/avatar`, fd)
            
-        } catch (err) {
-            console.log(err)
+        } catch (err) {            
+            return(err.response.data.error)            
         }
 
     }

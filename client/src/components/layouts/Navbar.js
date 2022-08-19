@@ -11,16 +11,16 @@ const Navbar = () => {
         return (<div className='ui item menu'>
         <ul>
             <li className='item'>
-            <NavLink  to='/'>Home</NavLink>
+            <NavLink  to='/' style={{'color':'black'}}>Home</NavLink>
             </li>
             { user.name==='admin' && <li className='item'>
                 <NavLink  to='/admin'>AdminPage</NavLink>
             </li>}
             { user.name!=='admin' && <li className='item'>
-            <NavLink  to='/register'>Register</NavLink>
+            <NavLink  to='/register' style={{'color':'black'}}>Register</NavLink>
             </li>}
             <li className='item'>
-            <NavLink to='/login'>Login</NavLink>
+            <NavLink to='/login' style={{'color':'black'}}>Login</NavLink>
             </li>        
         </ul>        
         </div> )

@@ -51,25 +51,35 @@ const Register = () => {
 
    const chooseAvatar = (e)=> {
       const file = e.target.files[0]
-      setAvatar(file)
+      setAvatar(file)   
       setAlert({
          alert: true,
          header: 'WARNING',
          text: `File to be uploaded: ${file.name}`,
          yesButton: 'OK'
-      })
+      })      
    }
 
    const inputRef = useRef(null)
 
-   const onUploadAvatar = ()=> {
-         uploadAvatar(avatar)
+   const onUploadAvatar = async ()=> {
+         const result = await uploadAvatar(avatar)
+         if (result ==='File too large') {
+            setAvatar(null)    
+            setAlert({
+               alert: true,
+               header: 'WARNING',
+               text: `The file is too large! Maximum size is 200 kB.`,
+               yesButton: 'OK'
+            })
+      } else {              
          setAlert({
             alert: true,
             header: 'SUCCESS',
             text: 'Avatar uploaded!',
             yesButton: 'OK'
-         })
+         })         
+      }         
    }
 
    const onDeleteUser =()=> {
@@ -82,11 +92,15 @@ const Register = () => {
          yesButton: 'OK'
       })
    }
+
+   const onRemoveAlert= ()=>{
+      removeAlert()
+   }
    
    return (<div className='ui center aligned container'>
-      {alert && <Modal handleAlert ={()=>removeAlert()}/>}
+      {alert && <Modal handleAlert ={onRemoveAlert}/>}
       {user ? (<div>
-         <h2 className='ui blue header'>Add Avatar to Your Account!</h2>
+         <h2 className='ui header'>Add Avatar to Your Account!</h2>
          <input 
             type="file" 
             style={{display: 'none'}}
@@ -94,8 +108,8 @@ const Register = () => {
             onChange={chooseAvatar} 
          />
          <button className='ui button' onClick={()=>inputRef.current.click()}>Choose File</button>
-         <button className='ui button' onClick={onUploadAvatar}>Upload</button> 
-         <h3 className='ui blue header'>Would you like to delete your account?</h3>
+         <button className={avatar? 'ui primary button': 'ui button'} onClick={onUploadAvatar}>Upload</button> 
+         <h3 className='ui header'>Would you like to delete your account?</h3>
          <button className='ui button' onClick={onDeleteUser}>Delete Account</button>
          </div>) : (<div>
          <h2 className='ui header'>Would you like to register?</h2>
