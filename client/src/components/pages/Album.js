@@ -7,8 +7,6 @@ import CommentContext from '../../context/comment/commentContext'
 import LeftArrow from './left-arrow.png'
 import RightArrow from './right-arrow.png'
 
-
-
 const Album = () => {
     const navigate = useNavigate()
 
@@ -31,7 +29,7 @@ const Album = () => {
             getPicture(album.pics[index].name)
             getComments(id)
         }       
-    },[index])  
+    },[index, album])  
 
     const pic = !album ? {} : album.pics[index]
 
@@ -52,7 +50,7 @@ const Album = () => {
             setIndex(index + 1)
         }
     }
-// ui center aligned container
+
     return (loading || !album ? (<div className='ui active centered inline loader'>Loading</div>) : (
              
                 <div className='ui two column doubling stackable grid container'>
@@ -79,5 +77,3 @@ const Album = () => {
 }
 
 export default Album   
-
-//<h3 className='ui header'>Year: {album.year}</h3>

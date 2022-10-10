@@ -8,7 +8,7 @@ const Navbar = () => {
     const { user } = userContext
 
     if (user) {
-        return (<div className='ui item menu'>
+        return (<div className='ui menu'>
         <ul>
             <li className='item'>
             <NavLink  to='/' style={{'color':'black'}}>Home</NavLink>

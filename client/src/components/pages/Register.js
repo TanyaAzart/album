@@ -72,7 +72,8 @@ const Register = () => {
                text: `The file is too large! Maximum size is 200 kB.`,
                yesButton: 'OK'
             })
-      } else {              
+      } else {  
+         setAvatar(null)             
          setAlert({
             alert: true,
             header: 'SUCCESS',
@@ -92,13 +93,9 @@ const Register = () => {
          yesButton: 'OK'
       })
    }
-
-   const onRemoveAlert= ()=>{
-      removeAlert()
-   }
    
    return (<div className='ui center aligned container'>
-      {alert && <Modal handleAlert ={onRemoveAlert}/>}
+      {alert && <Modal handleAlert ={removeAlert}/>}
       {user ? (<div>
          <h2 className='ui header'>Add Avatar to Your Account!</h2>
          <input 
