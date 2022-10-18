@@ -82,8 +82,8 @@ const EditAlbum = ()=> {
         setAlbum( {
             ...album,
             pics: picsToKeep.concat(picToUpdate).sort((pic1,pic2)=>{
-                const name1 = pic1.name
-                const name2 = pic2.name
+                const name1 = pic1.title
+                const name2 = pic2.title
                 if(name1 < name2) {
                     return -1;
                   }

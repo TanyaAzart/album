@@ -57,7 +57,7 @@ const Album = () => {
                     <div className='column'> 
                     <img style={{'width': '30px', 'float':'left'}} src={LeftArrow} onClick ={showPrevious}/>                  
                     <img style={{'width': '30px', 'float':'right'}} src={RightArrow} onClick ={showNext}/>
-                    <img src={src} className='ui centered large rounded image'/>                    
+                    <img src={src} className='ui centered large rounded image'/>                
                 </div>
                 <div className='column'>
                     <div className='ui center aligned container'>
