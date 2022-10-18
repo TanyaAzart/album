@@ -14071,8 +14071,8 @@ img.ui.bordered.image {
 .ui.large.images img,
 .ui.large.images svg,
 .ui.large.image {
-  width: auto;
-  height: 500px;
+  width: 450px;
+  height: auto;
   font-size: 1.14285714rem;
 }
 
